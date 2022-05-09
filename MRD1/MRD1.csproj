@@ -8,7 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resource\MainWindow\closeBtn_default.png" />
+    <None Remove="Resource\MainWindow\closeBtn_MouseOver.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resource\MainWindow\closeBtn_default.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resource\MainWindow\closeBtn_MouseOver.png" />
   </ItemGroup>
 
 </Project>
