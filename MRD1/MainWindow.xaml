@@ -24,7 +24,47 @@
         xmlns:local="clr-namespace:MRD1"
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920">
+    <Window.Resources>
+        <Storyboard x:Key="MenuOpen">
+            <DoubleAnimationUsingKeyFrames 
+                Storyboard.TargetProperty="(FrameworkElement.Width)"
+                Storyboard.TargetName="MainMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="70"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="MenuClose">
+            <DoubleAnimationUsingKeyFrames 
+                Storyboard.TargetProperty="(FrameworkElement.Width)"
+                Storyboard.TargetName="MainMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="70"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ToggleButton.Checked" SourceName="MainMenuToggleButton">
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ToggleButton.Unchecked" SourceName="MainMenuToggleButton">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
+        </EventTrigger>
+    </Window.Triggers>
+    
     <MaterialDesign:DialogHost>
-        
+        <DockPanel
+            x:Name="MainMenu"
+            Background="LightGreen"
+            HorizontalAlignment="Left" Width="70">
+            <ToggleButton
+                x:Name="MainMenuToggleButton"
+                DockPanel.Dock="Top" HorizontalAlignment="Right"
+                Margin="16"
+                Style="{StaticResource MaterialDesignHamburgerToggleButton}"/>
+            <ListBox>
+                
+            </ListBox>
+        </DockPanel>
     </MaterialDesign:DialogHost>
 </Window>
