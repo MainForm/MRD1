@@ -57,82 +57,106 @@
         </EventTrigger>
     </Window.Triggers>
     
-    <MaterialDesign:DialogHost>
-        <DockPanel
-            LastChildFill="True"
-            x:Name="MainMenu"
-            Background="LightGreen"
-            HorizontalAlignment="Left" Width="70">
-            <DockPanel DockPanel.Dock="Top">
-                <ToggleButton
-                    x:Name="MainMenuToggleButton"
-                    DockPanel.Dock="Right"
-                    HorizontalAlignment="Right"
-                    Margin="16"
-                    Style="{StaticResource MaterialDesignHamburgerToggleButton}"/>
-                <TextBlock
-                    Text="MainMenu"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    FontSize="24"
-                    Margin="16"
-                    Width="auto"
-                    Visibility="{Binding ElementName=MainMenuToggleButton, Path=IsChecked, Converter={StaticResource BleanToVisibilityConverter}}"
-                    />
+    
+    <MaterialDesign:DialogHost
+        Identifier="RootDialog"
+        DialogTheme="Inherit">
+        <MaterialDesign:DrawerHost>
+            <DockPanel>
+                <DockPanel
+                    DockPanel.Dock="Left"
+                    x:Name="MainMenu"
+                    Background="LightGreen"
+                    HorizontalAlignment="Left" Width="70">
+                    <DockPanel DockPanel.Dock="Top">
+                        <ToggleButton
+                            x:Name="MainMenuToggleButton"
+                            DockPanel.Dock="Right"
+                            HorizontalAlignment="Right"
+                            Margin="16"
+                            Style="{StaticResource MaterialDesignHamburgerToggleButton}"/>
+                        <TextBlock
+                            Text="MainMenu"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="24"
+                            Margin="16"
+                            Width="auto"
+                            Visibility="{Binding ElementName=MainMenuToggleButton, Path=IsChecked, Converter={StaticResource BleanToVisibilityConverter}}"
+                            />
+                    </DockPanel>
+                    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                        <Button x:Name="CloseButton" 
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Left"
+                        Margin="16"
+                        Height="40"
+                        BorderThickness="0"
+                        Width="40" Click="CloseButton_Click" Cursor="Hand">
+                            <Button.Background>
+                                <ImageBrush ImageSource="/Resource/MainWindow/closeBtn_default.png"/>
+                            </Button.Background>
+                        </Button>
+                        <TextBlock FontSize="24" Text="종료" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <ListBox>
+                        <ListViewItem Height="60">
+                            <StackPanel Orientation="Horizontal">
+                                <MaterialDesign:PackIcon 
+                                    Kind="People" VerticalAlignment="Center"
+                                    Margin="8 0 10 0" Width="40" Height="40"/>
+                                <TextBlock Text="환자 추가" VerticalAlignment="Center"
+                                           FontSize="24"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem Height="60">
+                            <StackPanel Orientation="Horizontal">
+                                <MaterialDesign:PackIcon 
+                                    Kind="Eye" VerticalAlignment="Center"
+                                    Margin="8 0 10 0" Width="40" Height="40"/>
+                                <TextBlock Text="MRD1 측정" VerticalAlignment="Center"
+                                           FontSize="24"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem Height="60">
+                            <StackPanel Orientation="Horizontal">
+                                <MaterialDesign:PackIcon 
+                                    Kind="Replay" VerticalAlignment="Center"
+                                    Margin="8 0 10 0" Width="40" Height="40"/>
+                                <TextBlock Text="기록 재생" VerticalAlignment="Center"
+                                           FontSize="24"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem Height="60">
+                            <StackPanel Orientation="Horizontal">
+                                <MaterialDesign:PackIcon 
+                                    Kind="Settings" VerticalAlignment="Center"
+                                    Margin="8 0 10 0" Width="40" Height="40"/>
+                                <TextBlock Text="설정" VerticalAlignment="Center"
+                                           FontSize="24"/>
+                            </StackPanel>
+                        </ListViewItem>
+                    </ListBox>
+                </DockPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <ScrollViewer
+                        x:Name="MainScrollViewer"
+                        Grid.Row="1"
+                        MaterialDesign:ScrollViewerAssist.IsAutoHideEnabled="True">
+                        <ContentControl x:Name="ViewContentControl"
+                            />
+                    </ScrollViewer>
+                    <MaterialDesign:Snackbar
+                        x:Name="MainSnackbar"
+                        MessageQueue="{MaterialDesign:MessageQueue}"
+                        Grid.Row="1"/>
+                </Grid>
             </DockPanel>
-            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-                <Button x:Name="CloseButton" 
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Left"
-                Margin="16"
-                Height="40"
-                BorderThickness="0"
-                Width="40" Click="CloseButton_Click" Cursor="Hand">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/Resource/MainWindow/closeBtn_default.png"/>
-                    </Button.Background>
-                </Button>
-                <TextBlock FontSize="24" Text="종료" VerticalAlignment="Center"/>
-            </StackPanel>
-            
-            <ListBox>
-                <ListViewItem Height="60">
-                    <StackPanel Orientation="Horizontal">
-                        <MaterialDesign:PackIcon 
-                            Kind="People" VerticalAlignment="Center"
-                            Margin="8 0 10 0" Width="40" Height="40"/>
-                        <TextBlock Text="환자 추가" VerticalAlignment="Center"
-                                   FontSize="24"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem Height="60">
-                    <StackPanel Orientation="Horizontal">
-                        <MaterialDesign:PackIcon 
-                            Kind="Eye" VerticalAlignment="Center"
-                            Margin="8 0 10 0" Width="40" Height="40"/>
-                        <TextBlock Text="MRD1 측정" VerticalAlignment="Center"
-                                   FontSize="24"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem Height="60">
-                    <StackPanel Orientation="Horizontal">
-                        <MaterialDesign:PackIcon 
-                            Kind="Replay" VerticalAlignment="Center"
-                            Margin="8 0 10 0" Width="40" Height="40"/>
-                        <TextBlock Text="기록 재생" VerticalAlignment="Center"
-                                   FontSize="24"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem Height="60">
-                    <StackPanel Orientation="Horizontal">
-                        <MaterialDesign:PackIcon 
-                            Kind="Settings" VerticalAlignment="Center"
-                            Margin="8 0 10 0" Width="40" Height="40"/>
-                        <TextBlock Text="설정" VerticalAlignment="Center"
-                                   FontSize="24"/>
-                    </StackPanel>
-                </ListViewItem>
-            </ListBox>
-        </DockPanel>
+        </MaterialDesign:DrawerHost>
     </MaterialDesign:DialogHost>
 </Window>

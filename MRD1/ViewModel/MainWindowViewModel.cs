@@ -8,7 +8,7 @@ namespace MRD1.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {
-
+        
 
     }
 }
