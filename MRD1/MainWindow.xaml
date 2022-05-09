@@ -4,6 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         
+        xmlns:ViewModel="clr-namespace:MRD1.ViewModel"
+        d:DataContext="{d:DesignInstance ViewModel:MainWindowViewModel}"
+        
         xmlns:MaterialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -13,10 +16,15 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        
         xmlns:local="clr-namespace:MRD1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="1080" Width="1920">
+    <MaterialDesign:DialogHost>
+        
+    </MaterialDesign:DialogHost>
 </Window>
