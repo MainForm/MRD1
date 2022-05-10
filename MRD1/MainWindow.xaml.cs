@@ -24,11 +24,35 @@ namespace MRD1
         {
             InitializeComponent();
 
+            changeContent(new SelectPatient());
         }
+
+        public void changeContent(UserControl page)
+            => ViewContentControl.Content = page;
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void SelectPaitentListViewItem_Selected(object sender, RoutedEventArgs e)
+        {
+            changeContent(new SelectPatient());
+        }
+
+        private void MeasureMRD1ListViewItem_Selected(object sender, RoutedEventArgs e)
+        {
+            changeContent(new MeasureMRD1());
+        }
+
+        private void ReplayDataListViewItem_Selected(object sender, RoutedEventArgs e)
+        {
+            changeContent(new ReplayData());
+        }
+
+        private void SettingListViewItem_Selected(object sender, RoutedEventArgs e)
+        {
+            changeContent(new Setting());
         }
     }
 }

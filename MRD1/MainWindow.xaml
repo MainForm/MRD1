@@ -26,8 +26,11 @@
         xmlns:local="clr-namespace:MRD1"
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920">
+    
     <Window.Resources>
+        <!--메인 메뉴를 여는 애니메이션-->
         <Storyboard x:Key="MenuOpen">
+            <!--MainMenu의 Width 속성을 70 -> 230 으로 변경-->
             <DoubleAnimationUsingKeyFrames 
                 Storyboard.TargetProperty="(FrameworkElement.Width)"
                 Storyboard.TargetName="MainMenu">
@@ -35,7 +38,9 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="230"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <!--메인 메뉴를 닫는 애니메이션-->
         <Storyboard x:Key="MenuClose">
+            <!--MainMenu의 Width 속성을 230 -> 70 으로 변경-->
             <DoubleAnimationUsingKeyFrames 
                 Storyboard.TargetProperty="(FrameworkElement.Width)"
                 Storyboard.TargetName="MainMenu">
@@ -44,11 +49,10 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
 
-        <Convertor:BleanToVisibilityConverter x:Key="BleanToVisibilityConverter"/>
-
     </Window.Resources>
 
     <Window.Triggers>
+        <!--에니메이션과 이벤트 연결-->
         <EventTrigger RoutedEvent="ToggleButton.Checked" SourceName="MainMenuToggleButton">
             <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
         </EventTrigger>
@@ -81,9 +85,7 @@
                             VerticalAlignment="Center"
                             FontSize="24"
                             Margin="16"
-                            Width="auto"
-                            Visibility="{Binding ElementName=MainMenuToggleButton, Path=IsChecked, Converter={StaticResource BleanToVisibilityConverter}}"
-                            />
+                            Width="auto"/>
                     </DockPanel>
                     <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
                         <Button x:Name="CloseButton" 
@@ -101,7 +103,9 @@
                     </StackPanel>
 
                     <ListBox>
-                        <ListViewItem Height="60">
+                        <ListViewItem x:Name="SelectPaitentListViewItem" 
+                                      Height="60" Selected="SelectPaitentListViewItem_Selected"
+                                      >
                             <StackPanel Orientation="Horizontal">
                                 <MaterialDesign:PackIcon 
                                     Kind="People" VerticalAlignment="Center"
@@ -110,7 +114,8 @@
                                            FontSize="24"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem Height="60">
+                        <ListViewItem x:Name="MeasureMRD1ListViewItem" 
+                                      Height="60" Selected="MeasureMRD1ListViewItem_Selected">
                             <StackPanel Orientation="Horizontal">
                                 <MaterialDesign:PackIcon 
                                     Kind="Eye" VerticalAlignment="Center"
@@ -119,7 +124,8 @@
                                            FontSize="24"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem Height="60">
+                        <ListViewItem x:Name="ReplayDataListViewItem"
+                                      Height="60" Selected="ReplayDataListViewItem_Selected">
                             <StackPanel Orientation="Horizontal">
                                 <MaterialDesign:PackIcon 
                                     Kind="Replay" VerticalAlignment="Center"
@@ -128,7 +134,8 @@
                                            FontSize="24"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem Height="60">
+                        <ListViewItem x:Name="SettingListViewItem"
+                                      Height="60" Selected="SettingListViewItem_Selected">
                             <StackPanel Orientation="Horizontal">
                                 <MaterialDesign:PackIcon 
                                     Kind="Settings" VerticalAlignment="Center"
