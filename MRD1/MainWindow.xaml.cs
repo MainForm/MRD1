@@ -27,6 +27,7 @@ namespace MRD1
             changeContent(new SelectPatient());
         }
 
+
         public void changeContent(UserControl page)
             => ViewContentControl.Content = page;
 

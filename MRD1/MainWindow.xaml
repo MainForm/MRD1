@@ -155,8 +155,7 @@
                         x:Name="MainScrollViewer"
                         Grid.Row="1"
                         MaterialDesign:ScrollViewerAssist.IsAutoHideEnabled="True">
-                        <ContentControl x:Name="ViewContentControl"
-                            />
+                        <ContentControl x:Name="ViewContentControl"/>
                     </ScrollViewer>
                     <MaterialDesign:Snackbar
                         x:Name="MainSnackbar"

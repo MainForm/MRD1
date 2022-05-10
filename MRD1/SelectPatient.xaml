@@ -8,7 +8,7 @@
              xmlns:MaterialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              TextElement.FontWeight="Regular"
-             TextElement.FontSize="13"
+             TextElement.FontSize="24"
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
@@ -20,9 +20,84 @@
 
              d:DesignHeight="1080" d:DesignWidth="1850">
     <Grid>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
-                   FontSize="32">
-            This is SelectPatient page
-        </TextBlock>
+        <!--<MaterialDesign:Flipper 
+            VerticalAlignment="Center" HorizontalAlignment="Center"
+            Style="{DynamicResource MaterialDesignCardFlipper}"
+            MaterialDesign:ShadowAssist.ShadowDepth="Depth0">
+            <MaterialDesign:Flipper.FrontContent>
+                <MaterialDesign:Card>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <MaterialDesign:ColorZone
+                            Grid.Row="0"
+                            Mode="PrimaryLight"
+                            VerticalAlignment="Stretch">
+                            <DockPanel>
+                                <TextBlock VerticalAlignment="Center" Margin="10">
+                                    환자 선택
+                                </TextBlock>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" 
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center">
+                                    <TextBlock VerticalAlignment="Center">
+                                        환자 추가
+                                    </TextBlock>
+                                    <Button
+                                        Style="{DynamicResource MaterialDesignToolForegroundButton}"
+                                        Command="{x:Static MaterialDesign:Flipper.FlipCommand}"
+                                            Cursor="Hand">
+                                        <MaterialDesign:PackIcon
+                                            Height="40" Width="40"
+                                            VerticalAlignment="Center"
+                                            Kind="ArrowRight"
+                                            HorizontalAlignment="Right"/>
+                                    </Button>
+                                </StackPanel>
+                            </DockPanel>
+                        </MaterialDesign:ColorZone>
+                    </Grid>
+                </MaterialDesign:Card>
+            </MaterialDesign:Flipper.FrontContent>
+            <MaterialDesign:Flipper.BackContent>
+                <MaterialDesign:Card>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <MaterialDesign:ColorZone
+                            Grid.Row="0"
+                            Mode="PrimaryLight"
+                            VerticalAlignment="Stretch">
+                            <DockPanel>
+                                <TextBlock VerticalAlignment="Center" Margin="10">
+                                    환자 선택
+                                </TextBlock>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" 
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center">
+                                    <TextBlock VerticalAlignment="Center">
+                                        환자 추가
+                                    </TextBlock>
+                                    <Button
+                                        Style="{DynamicResource MaterialDesignToolForegroundButton}"
+                                        Command="{x:Static MaterialDesign:Flipper.FlipCommand}"
+                                            Cursor="Hand">
+                                        <MaterialDesign:PackIcon
+                                            Height="40" Width="40"
+                                            VerticalAlignment="Center"
+                                            Kind="ArrowRight"
+                                            HorizontalAlignment="Right"/>
+                                    </Button>
+                                </StackPanel>
+                            </DockPanel>
+                        </MaterialDesign:ColorZone>
+                    </Grid>
+                </MaterialDesign:Card>
+            </MaterialDesign:Flipper.BackContent>
+        </MaterialDesign:Flipper>-->
     </Grid>
 </UserControl>

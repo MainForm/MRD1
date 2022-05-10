@@ -8,7 +8,7 @@
              xmlns:MaterialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              TextElement.FontWeight="Regular"
-             TextElement.FontSize="13"
+             TextElement.FontSize="18"
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
@@ -20,9 +20,54 @@
              
              d:DesignHeight="1080" d:DesignWidth="1850">
     <Grid>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
-                   FontSize="32">
-            This is MeasureMRD1 page
-        </TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Grid.Column="0"
+            Header="Left" Margin="10"
+            Style="{DynamicResource MaterialDesignCardGroupBox}">
+            
+        </GroupBox>
+
+        <GroupBox Grid.Column="1"
+            Header="Right" Margin="10"
+            Style="{DynamicResource MaterialDesignCardGroupBox}">
+
+        </GroupBox>
+
+        <GroupBox Grid.Column="2"
+            Header="Infomation" Margin="10"
+            Style="{DynamicResource MaterialDesignCardGroupBox}">
+            <DockPanel>
+                <Button
+                    DockPanel.Dock="Bottom"
+                    Style="{DynamicResource MaterialDesignRaisedButton}"
+                    Height="60">
+
+                </Button>
+                <TextBlock
+                    DockPanel.Dock="Top">
+                    안규빈
+                </TextBlock>
+
+                <MaterialDesign:Card Margin="0 10">
+                    <TabControl
+                        TabStripPlacement="Bottom">
+                        <TabItem Header="Top">
+                            
+                        </TabItem>
+                        <TabItem Header="Middle">
+
+                        </TabItem>
+                        <TabItem Header="Bottom">
+
+                        </TabItem>
+                    </TabControl>
+                </MaterialDesign:Card>
+            </DockPanel>
+        </GroupBox>
     </Grid>
 </UserControl>

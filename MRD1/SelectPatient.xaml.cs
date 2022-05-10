@@ -23,6 +23,7 @@ namespace MRD1
         public SelectPatient()
         {
             InitializeComponent();
+
         }
     }
 }

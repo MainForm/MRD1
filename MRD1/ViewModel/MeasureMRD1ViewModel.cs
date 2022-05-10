@@ -8,5 +8,6 @@ namespace MRD1.ViewModel
 {
     public class MeasureMRD1ViewModel : BaseViewModel
     {
+
     }
 }

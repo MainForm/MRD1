@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using MRD1.ViewModel;
+
 namespace MRD1
 {
     /// <summary>
@@ -20,12 +22,16 @@ namespace MRD1
     /// </summary>
     public partial class MeasureMRD1 : UserControl
     {
+        MeasureMRD1ViewModel ViewModel = null;
         public MeasureMRD1()
         {
             InitializeComponent();
 
+            ViewModel = new MeasureMRD1ViewModel();
+            DataContext = ViewModel;
+
 
         }
-
+        
     }
 }
