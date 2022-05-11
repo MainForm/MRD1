@@ -17,6 +17,8 @@ using OpenCvSharp;
 using OpenCvSharp.WpfExtensions;
 using Window = System.Windows.Window;
 
+using MRD1.DeapLearning;
+
 namespace MRD1
 {
     /// <summary>
@@ -25,6 +27,18 @@ namespace MRD1
     public partial class MainWindow : Window
     {
         private VideoCapture[] cameras = new VideoCapture[2];
+        private RITnet __model;
+
+        public UserControl CurrentContent
+        {
+            get => ViewContentControl.Content as UserControl;
+            set => ViewContentControl.Content = value;
+        }
+
+        public RITnet Model
+        {
+            get => __model;
+        }
 
         public MainWindow()
         {
@@ -33,10 +47,12 @@ namespace MRD1
             for(int i = 0; i < cameras.Length; i++)
                 cameras[i] = new VideoCapture();
 
-            //var LeftCamera = getCamera(CameraPosition.Left);
-            //LeftCamera.Open(0);
-            //LeftCamera.Set(VideoCaptureProperties.FrameHeight, 720);
-            //LeftCamera.Set(VideoCaptureProperties.FrameWidth, 1280);
+            var LeftCamera = getCamera(CameraPosition.Left);
+            LeftCamera.Open(0);
+            LeftCamera.Set(VideoCaptureProperties.FrameHeight, 720);
+            LeftCamera.Set(VideoCaptureProperties.FrameWidth, 1280);
+
+            __model = new RITnet("./RITnet.onnx");
 
             changeContent(new SelectPatient());
         }
@@ -65,7 +81,7 @@ namespace MRD1
 
         private void SelectPaitentListViewItem_Selected(object sender, RoutedEventArgs e)
         {
-            changeContent(new SelectPatient());
+            CurrentContent = new SelectPatient();
         }
 
         private void MeasureMRD1ListViewItem_Selected(object sender, RoutedEventArgs e)

@@ -48,6 +48,7 @@ namespace MRD1
 
             threadPlay = new Thread(threadFunctionPlay);
             threadPlay.Start();
+            
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -77,22 +78,23 @@ namespace MRD1
                     {
                         if (frames[i] != null)
                         {
+                            var output = MainWindow.Model.PredictEye(frames[i], new OpenCvSharp.Size(640, 400)) * 80;
+
                             Dispatcher.Invoke(() =>
                             {
-                                ShowMRD1ViewModels[i].Image = WriteableBitmapConverter.ToWriteableBitmap(frames[i]);
+                                ShowMRD1ViewModels[i].Image = WriteableBitmapConverter.ToWriteableBitmap(output);
                             });
                         }
                     }
-
-                    Thread.Sleep(16);
                 }
             }
-            catch (Exception ex)
+            catch (ThreadInterruptedException)
             {
-                Dispatcher.Invoke(() =>
-                {
-                    MainWindow.MainSnackbar.MessageQueue.Enqueue("finish");
-                });
+
+            }
+            catch (TaskCanceledException)
+            {
+
             }
             finally
             {
