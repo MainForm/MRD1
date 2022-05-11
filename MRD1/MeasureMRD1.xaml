@@ -29,13 +29,13 @@
         <GroupBox Grid.Column="0"
             Header="Left" Margin="10"
             Style="{DynamicResource MaterialDesignCardGroupBox}">
-            
+            <ContentControl x:Name="LeftEyeContentControl"/>
         </GroupBox>
 
         <GroupBox Grid.Column="1"
             Header="Right" Margin="10"
             Style="{DynamicResource MaterialDesignCardGroupBox}">
-
+            <ContentControl x:Name="RightEyeContentControl"/>
         </GroupBox>
 
         <GroupBox Grid.Column="2"

@@ -13,25 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using MRD1.ViewModel;
-
 namespace MRD1
 {
     /// <summary>
-    /// MeasureMRD1.xaml에 대한 상호 작용 논리
+    /// ShowMRD1.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class MeasureMRD1 : UserControl
+    public partial class ShowMRD1 : UserControl
     {
-        MeasureMRD1ViewModel ViewModel = null;
-        public MeasureMRD1()
+        public ShowMRD1()
         {
             InitializeComponent();
-
-            ViewModel = new MeasureMRD1ViewModel();
-            DataContext = ViewModel;
-
-            LeftEyeContentControl.Content = new ShowMRD1();
-            RightEyeContentControl.Content = new ShowMRD1();
         }
     }
 }

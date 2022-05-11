@@ -19,8 +19,19 @@
              d:DataContext="{d:DesignInstance ViewModel:MeasureMRD1ViewModel}"
 
              d:DesignHeight="1080" d:DesignWidth="1850">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Flipper.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Popupbox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-        <!--<MaterialDesign:Flipper 
+        <MaterialDesign:Flipper 
             VerticalAlignment="Center" HorizontalAlignment="Center"
             Style="{DynamicResource MaterialDesignCardFlipper}"
             MaterialDesign:ShadowAssist.ShadowDepth="Depth0">
@@ -98,6 +109,6 @@
                     </Grid>
                 </MaterialDesign:Card>
             </MaterialDesign:Flipper.BackContent>
-        </MaterialDesign:Flipper>-->
+        </MaterialDesign:Flipper>
     </Grid>
 </UserControl>
