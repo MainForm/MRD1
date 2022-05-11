@@ -13,6 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using MRD1.ViewModel;
+
+using System.Threading;
+using System.Collections.ObjectModel;
+
 namespace MRD1
 {
     /// <summary>
@@ -20,10 +25,22 @@ namespace MRD1
     /// </summary>
     public partial class SelectPatient : UserControl
     {
+        public SelectPatientViewModel ViewModel = new SelectPatientViewModel();
         public SelectPatient()
         {
             InitializeComponent();
 
+            DataContext = ViewModel;
+        }
+
+        private void SelectPatientListViewItem(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            if (button.DataContext is Patient patient)
+            {
+               ViewModel.Patients.Remove(patient);
+            }
         }
     }
 }

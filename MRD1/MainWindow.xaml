@@ -89,12 +89,12 @@
                     </DockPanel>
                     <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
                         <Button x:Name="CloseButton" 
-                        VerticalAlignment="Bottom"
-                        HorizontalAlignment="Left"
-                        Margin="16"
-                        Height="40"
-                        BorderThickness="0"
-                        Width="40" Click="CloseButton_Click" Cursor="Hand">
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Left"
+                            Margin="16"
+                            Height="40"
+                            BorderThickness="0"
+                            Width="40" Click="CloseButton_Click" Cursor="Hand">
                             <Button.Background>
                                 <ImageBrush ImageSource="/Resource/MainWindow/closeBtn_default.png"/>
                             </Button.Background>

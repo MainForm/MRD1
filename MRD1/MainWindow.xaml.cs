@@ -33,10 +33,10 @@ namespace MRD1
             for(int i = 0; i < cameras.Length; i++)
                 cameras[i] = new VideoCapture();
 
-            var LeftCamera = getCamera(CameraPosition.Left);
-            LeftCamera.Open(0);
-            LeftCamera.Set(VideoCaptureProperties.FrameHeight, 720);
-            LeftCamera.Set(VideoCaptureProperties.FrameWidth, 1280);
+            //var LeftCamera = getCamera(CameraPosition.Left);
+            //LeftCamera.Open(0);
+            //LeftCamera.Set(VideoCaptureProperties.FrameHeight, 720);
+            //LeftCamera.Set(VideoCaptureProperties.FrameWidth, 1280);
 
             changeContent(new SelectPatient());
         }

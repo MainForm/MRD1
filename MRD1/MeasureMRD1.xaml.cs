@@ -37,7 +37,6 @@ namespace MRD1
 
         Thread threadPlay;
 
-
         public MeasureMRD1()
         {
             InitializeComponent();
@@ -64,7 +63,7 @@ namespace MRD1
                 {
                     Mat[] frames = new Mat[2];
 
-                    for(int i = 0; i < frames.Length; i++)
+                    for (int i = 0; i < frames.Length; i++)
                     {
                         var camera = MainWindow.getCamera((CameraPosition)i);
                         if (camera.IsOpened() == true)
@@ -90,7 +89,10 @@ namespace MRD1
             }
             catch (Exception ex)
             {
-
+                Dispatcher.Invoke(() =>
+                {
+                    MainWindow.MainSnackbar.MessageQueue.Enqueue("finish");
+                });
             }
             finally
             {
