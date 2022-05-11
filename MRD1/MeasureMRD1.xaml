@@ -18,7 +18,7 @@
              xmlns:ViewModel="clr-namespace:MRD1.ViewModel"
              d:DataContext="{d:DesignInstance ViewModel:SelectPatientViewModel}"
              
-             d:DesignHeight="1080" d:DesignWidth="1850">
+             d:DesignHeight="1080" d:DesignWidth="1850" Unloaded="UserControl_Unloaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -45,7 +45,7 @@
                 <Button
                     DockPanel.Dock="Bottom"
                     Style="{DynamicResource MaterialDesignRaisedButton}"
-                    Height="60">
+                    Height="60" Cursor="Hand">
 
                 </Button>
                 <TextBlock

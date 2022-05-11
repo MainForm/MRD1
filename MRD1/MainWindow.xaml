@@ -25,7 +25,7 @@
         
         xmlns:local="clr-namespace:MRD1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920">
+        Title="MainWindow" Height="1080" Width="1920" Unloaded="Window_Unloaded">
     
     <Window.Resources>
         <!--메인 메뉴를 여는 애니메이션-->

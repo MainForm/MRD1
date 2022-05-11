@@ -13,6 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using OpenCvSharp;
+using OpenCvSharp.WpfExtensions;
+using Window = System.Windows.Window;
+
 namespace MRD1
 {
     /// <summary>
@@ -20,14 +24,37 @@ namespace MRD1
     /// </summary>
     public partial class MainWindow : Window
     {
+        private VideoCapture[] cameras = new VideoCapture[2];
+
         public MainWindow()
         {
             InitializeComponent();
 
+            for(int i = 0; i < cameras.Length; i++)
+                cameras[i] = new VideoCapture();
+
+            var LeftCamera = getCamera(CameraPosition.Left);
+            LeftCamera.Open(0);
+            LeftCamera.Set(VideoCaptureProperties.FrameHeight, 720);
+            LeftCamera.Set(VideoCaptureProperties.FrameWidth, 1280);
+
             changeContent(new SelectPatient());
         }
 
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            foreach(VideoCapture cam in cameras)
+            {
+                if (cam.IsOpened())
+                    cam.Release();
 
+                cam.Dispose();
+            }
+        }
+
+        public VideoCapture getCamera(CameraPosition position)
+            => cameras[(int)position];
+        
         public void changeContent(UserControl page)
             => ViewContentControl.Content = page;
 

@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using MRD1.ViewModel;
+
 namespace MRD1
 {
     /// <summary>
@@ -20,9 +22,15 @@ namespace MRD1
     /// </summary>
     public partial class ShowMRD1 : UserControl
     {
-        public ShowMRD1()
+        public ShowMRD1ViewModel ViewModel;
+        public ShowMRD1(ShowMRD1ViewModel ViewModel = null)
         {
             InitializeComponent();
+
+            if (ViewModel == null)
+                DataContext = new ShowMRD1ViewModel();
+            else
+                DataContext = ViewModel;
         }
     }
 }

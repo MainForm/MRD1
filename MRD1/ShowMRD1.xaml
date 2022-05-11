@@ -15,16 +15,20 @@
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
              
+             xmlns:ViewModel="clr-namespace:MRD1.ViewModel"
+             d:DataContext="{d:DesignInstance ViewModel:ShowMRD1ViewModel}"
+             
              d:DesignHeight="1000" d:DesignWidth="500">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="300"/>
+            <RowDefinition Height="400"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Image x:Name="EyeImage"
-               Grid.Row="0"/>
+               Grid.Row="0"
+               Source="{Binding Image}"/>
 
         <Grid Grid.Row="1">
             <StackPanel Orientation="Horizontal" Margin="20"
