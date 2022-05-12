@@ -78,7 +78,9 @@ namespace MRD1
                     {
                         if (frames[i] != null)
                         {
-                            var output = MainWindow.Model.PredictEye(frames[i], new OpenCvSharp.Size(640, 400)) * 80;
+                            var output = MainWindow.Model.PredictEye(frames[i], new OpenCvSharp.Size(640, 400));
+
+                            output = Algorithm.getPupil(output,frames[i]);
 
                             Dispatcher.Invoke(() =>
                             {

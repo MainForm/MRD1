@@ -40,6 +40,7 @@ namespace MRD1.DeapLearning
         public Mat PredictEye(Mat input, Size size)
         {
             Mat matInput = new Mat();
+            Size outputSize = input.Size();
             input = input.CvtColor(ColorConversionCodes.BGR2GRAY);
             input.ConvertTo(matInput, MatType.CV_32FC1);
             matInput = matInput.Resize(size) / 255.0F;
@@ -57,7 +58,7 @@ namespace MRD1.DeapLearning
             {
                 var outTensor = output.ElementAt(0).Value as DenseTensor<byte>;
 
-                return outTensor.toMat(size);
+                return outTensor?.toMat(size).Resize(outputSize);
             }
         }
     }
