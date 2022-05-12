@@ -34,6 +34,7 @@ namespace MRD1
         string __callnumber;
         char __gender;
 
+        public int ID { get; set; }
         public string Name
         {
             get => __name;

@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using MySql.Data.MySqlClient;
+
 using OpenCvSharp;
 using OpenCvSharp.WpfExtensions;
 using Window = System.Windows.Window;
@@ -28,6 +30,8 @@ namespace MRD1
     {
         private VideoCapture[] cameras = new VideoCapture[2];
         private RITnet __model;
+        private MySqlConnection __connection;
+
 
         public UserControl CurrentContent
         {
@@ -38,6 +42,11 @@ namespace MRD1
         public RITnet Model
         {
             get => __model;
+        }
+
+        public MySqlConnection Connection
+        {
+            get => __connection;
         }
 
         public MainWindow()
@@ -54,11 +63,25 @@ namespace MRD1
 
             __model = new RITnet("./RITnet.onnx");
 
+            __connection = new MySqlConnection("Server=127.0.0.1;port=3306;Database=mrd1_db;Uid=MRD1;Pwd=''");
+
+            try
+            {
+                __connection.Open();
+            }
+            catch(MySqlException e)
+            {
+                MainSnackbar.MessageQueue.Enqueue("데이터 베이스 연결에 실패 했습니다.");
+            }
+
             changeContent(new SelectPatient());
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
+            __connection.Close();
+            __connection.Dispose();
+
             foreach(VideoCapture cam in cameras)
             {
                 if (cam.IsOpened())

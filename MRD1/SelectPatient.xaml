@@ -77,8 +77,17 @@
                                         <GridViewColumn>
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Click="SelectPatientListViewItem">
+                                                    <Button Background="LightGreen" Click="SelectPatientListViewItem">
                                                         선택
+                                                    </Button>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Background="DeepPink" BorderBrush="DeepPink" Click="RemovePatientListViewItem">
+                                                        삭제
                                                     </Button>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
