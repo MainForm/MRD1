@@ -14,9 +14,13 @@
              FontFamily="{DynamicResource MaterialDesignFont}"
              mc:Ignorable="d"
              
+             xmlns:Converter="clr-namespace:MRD1.Converter"
+             
              d:DataContext="{d:DesignInstance ViewModel:SelectPatientViewModel}"
              d:DesignHeight="1080" d:DesignWidth="1850">
-
+    <UserControl.Resources>
+        <Converter:DateTimeToYYYYMMDDConverter x:Key="DateTimeToYYYYMMDDConverter"/>
+    </UserControl.Resources>
     <Grid>
         <MaterialDesign:Flipper VerticalAlignment="Center" HorizontalAlignment="Center">
             <MaterialDesign:Flipper.FrontContent>
@@ -70,7 +74,7 @@
                                             DisplayMemberBinding="{Binding Age}"/>
                                         <GridViewColumn
                                             Header="생년월일" 
-                                            DisplayMemberBinding="{Binding Birthday}"/>
+                                            DisplayMemberBinding="{Binding Birthday ,Converter={ StaticResource DateTimeToYYYYMMDDConverter}}"/>
                                         <GridViewColumn
                                             Header="전화번호" 
                                             DisplayMemberBinding="{Binding Callnumber}"/>
