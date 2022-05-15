@@ -54,7 +54,7 @@ namespace MRD1.ViewModel
         {
             Patients.Remove(patient);
 
-            string sql = $"DELETE FROM patient_tb WHERE Patient_id={patient.ID}";
+            string sql = $"DELETE FROM patient_tb WHERE ID={patient.ID}";
             using MySqlCommand command = new MySqlCommand(sql, connection);
 
             try

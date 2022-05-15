@@ -61,6 +61,8 @@ namespace MRD1
             LeftCamera.Set(VideoCaptureProperties.FrameHeight, 720);
             LeftCamera.Set(VideoCaptureProperties.FrameWidth, 1280);
 
+            cameras[1] = cameras[0]; 
+
             __model = new RITnet("./RITnet.onnx");
 
             __connection = new MySqlConnection("Server=127.0.0.1;port=3306;Database=mrd1_db;Uid=MRD1;Pwd=''");

@@ -62,21 +62,24 @@ namespace MRD1
             {
                 while (true)
                 {
-                    Mat[] frames = new Mat[2];
+                    Mat[] frames = new Mat[2]
+                    {
+                        new Mat(),
+                        new Mat(),
+                    };
 
                     for (int i = 0; i < frames.Length; i++)
                     {
                         var camera = MainWindow.getCamera((CameraPosition)i);
                         if (camera.IsOpened() == true)
                         {
-                            frames[i] = new Mat();
                             camera.Read(frames[i]);
                         }
                     }
 
                     for (int i = 0; i < frames.Length; i++)
                     {
-                        if (frames[i] != null)
+                        if (frames[i].Empty() == false)
                         {
                             var output = MainWindow.Model.PredictEye(frames[i], new OpenCvSharp.Size(640, 400));
 
