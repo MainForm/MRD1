@@ -17,7 +17,7 @@
              xmlns:Converter="clr-namespace:MRD1.Converter"
              
              d:DataContext="{d:DesignInstance ViewModel:SelectPatientViewModel}"
-             d:DesignHeight="1080" d:DesignWidth="1850">
+             d:DesignHeight="1080" d:DesignWidth="1850" Unloaded="UserControl_Unloaded">
     <UserControl.Resources>
         <Converter:DateTimeToYYYYMMDDConverter x:Key="DateTimeToYYYYMMDDConverter"/>
         <Converter:GenderToIntConverter x:Key="GenderToIntConverter"/>
@@ -148,7 +148,7 @@
                                         Margin="0 0 0 30"
                                         FontSize="16"
                                         Content="추가" Cursor="Hand" Click="AddPatientButton_Clicked"
-                                        />
+                                        Command="{x:Static MaterialDesign:Flipper.FlipCommand}"/>
 
                                 <Grid>
                                     <Grid.ColumnDefinitions>

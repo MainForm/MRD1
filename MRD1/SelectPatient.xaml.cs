@@ -26,6 +26,8 @@ namespace MRD1
     public partial class SelectPatient : UserControl
     {
         public SelectPatientViewModel ViewModel;
+
+        private MainWindow MainWindow = Application.Current.MainWindow as MainWindow;
         public SelectPatient()
         {
             InitializeComponent();
@@ -38,9 +40,21 @@ namespace MRD1
             ViewModel.updatePatient();
 
         }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            MainWindow.MainSnackbar.MessageQueue.Enqueue("unload Select page");
+        }
+
         private void SelectPatientListViewItem(object sender, RoutedEventArgs e)
         {
+            Button button = sender as Button;
 
+            if (button.DataContext is Patient patient)
+            {
+                MainWindow.selectPatient = patient;
+                MainWindow.MeasureMRD1ListViewItem.IsSelected = true;
+            }
         }
 
         private void RemovePatientListViewItem(object sender, RoutedEventArgs e)

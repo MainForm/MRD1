@@ -36,7 +36,9 @@ namespace MRD1
         public UserControl CurrentContent
         {
             get => ViewContentControl.Content as UserControl;
-            set => ViewContentControl.Content = value;
+            set {
+                ViewContentControl.Content = value;
+            }
         }
 
         public RITnet Model
@@ -48,6 +50,8 @@ namespace MRD1
         {
             get => __connection;
         }
+
+        public Patient selectPatient { get; set; } = null;
 
         public MainWindow()
         {
