@@ -76,7 +76,7 @@ namespace MRD1
                 MainSnackbar.MessageQueue.Enqueue("데이터 베이스 연결에 실패 했습니다.");
             }
 
-            changeContent(new SelectPatient());
+            CurrentContent = new SelectPatient();
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -96,9 +96,6 @@ namespace MRD1
         public VideoCapture getCamera(CameraPosition position)
             => cameras[(int)position];
         
-        public void changeContent(UserControl page)
-            => ViewContentControl.Content = page;
-
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -111,17 +108,17 @@ namespace MRD1
 
         private void MeasureMRD1ListViewItem_Selected(object sender, RoutedEventArgs e)
         {
-            changeContent(new MeasureMRD1());
+            CurrentContent = new MeasureMRD1();
         }
 
         private void ReplayDataListViewItem_Selected(object sender, RoutedEventArgs e)
         {
-            changeContent(new ReplayData());
+            CurrentContent = new ReplayData();
         }
 
         private void SettingListViewItem_Selected(object sender, RoutedEventArgs e)
         {
-            changeContent(new Setting());
+            CurrentContent = new Setting();
         }
     }
 }

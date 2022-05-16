@@ -48,7 +48,7 @@ namespace MRD1
 
             threadPlay = new Thread(threadFunctionPlay);
             threadPlay.Start();
-            
+
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -104,6 +104,31 @@ namespace MRD1
             finally
             {
 
+            }
+        }
+
+        private void StartMeasuringButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            MainWindow.MainSnackbar.MessageQueue.Enqueue($"now Position : {ViewModel.LedPosition.ToString()}");
+
+            switch (ViewModel.MeasureStatus)
+            {
+                case MeasureStatus.None:
+                    /*
+                     * 아두이노 해당 LED 점등
+                     */
+                    ViewModel.MeasureStatus = MeasureStatus.Ready;
+                    break;
+                case MeasureStatus.Ready:
+
+                    ViewModel.MeasureStatus = MeasureStatus.Start;
+                    break;
+                case MeasureStatus.Start:
+
+                    ViewModel.MeasureStatus = MeasureStatus.None;
+                    break;
             }
         }
     }
