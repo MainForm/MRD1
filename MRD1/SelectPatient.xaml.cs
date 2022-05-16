@@ -36,8 +36,8 @@ namespace MRD1
             DataContext = ViewModel;
 
             ViewModel.updatePatient();
-        }
 
+        }
         private void SelectPatientListViewItem(object sender, RoutedEventArgs e)
         {
 
@@ -51,6 +51,17 @@ namespace MRD1
             {
                 ViewModel.removePatient(patient);
             }
+        }
+
+        private void AddPatientButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.InsertPatient(new Patient
+            {
+                Name = ViewModel.AddName,
+                Birthday = ViewModel.AddBirth.Value,
+                Gender = ViewModel.AddGender.ToString().ElementAt(0),
+                Callnumber = ViewModel.AddCallnumber,
+            });
         }
     }
 }

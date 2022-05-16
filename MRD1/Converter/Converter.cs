@@ -38,7 +38,7 @@ namespace MRD1.Converter
         {
             DateTime date = (DateTime)value;
 
-            return date.ToString("yyyy-mm-dd");
+            return date.ToString("yyyy-MM-dd");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -86,6 +86,21 @@ namespace MRD1.Converter
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return (LedPosition)(int)value;
+        }
+    }
+
+    public class GenderToIntConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            Gender ledPosition = (Gender)value;
+
+            return (int)ledPosition;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (Gender)(int)value;
         }
     }
 }
