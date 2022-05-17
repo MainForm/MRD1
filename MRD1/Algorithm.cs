@@ -12,7 +12,7 @@ namespace MRD1
 {
     public class Algorithm
     {
-        public static Mat getPupil(Mat input, Mat Orignal)
+        public static (Point2d,double)? getPupil(Mat input)
         {
             var thres = input.Threshold(2, 255, ThresholdTypes.Binary);
             Mat hierarchy = new Mat();
@@ -21,60 +21,25 @@ namespace MRD1
 
             if (contours.Length >= 1)
             {
-                int method = 0;
+                contours[0].GetArray(out Point[] contour);
+                int argmin = Array.IndexOf(contour, contour.MinBy(pt => pt.X)) + 10;
+                int argmax = Array.IndexOf(contour, contour.MaxBy(pt => pt.X)) - 10;
 
-                if(method == 0)
+                // Trace.WriteLine($"argmin : {argmin}, argmax : {argmax}");
+
+                if (argmin + 20 < argmax)
                 {
-                    contours[0].GetArray(out Point[] contour);
-                    int argmin = Array.IndexOf(contour, contour.MinBy(pt => pt.X)) + 10;
-                    int argmax = Array.IndexOf(contour, contour.MaxBy(pt => pt.X)) - 10;
-
-                    Trace.WriteLine($"argmin : {argmin}, argmax : {argmax}");
-
-                    if (argmin + 20 < argmax)
-                    {
-                        contour = contour.SubArray(argmin, argmax);
+                    contour = contour.SubArray(argmin, argmax);
                         
-                        Orignal.Circle(contour.First(), 5, new Scalar(255, 0, 0), -1);
-                        Orignal.Circle(contour.Last(), 5, new Scalar(255, 0, 0), -1);
+                    return fit_LMS_Circle(contour);
 
-                        (Point2d center,double radius) = fit_LMS_Circle(contour);
-
-                        Orignal.Circle(center.ToPoint(), (int)radius, new Scalar(0, 255, 0), 2);
-                        //Orignal.Ellipse(Cv2.FitEllipse(contour), new Scalar(255, 255, 0));
-                        //Orignal.Ellipse(Cv2.FitEllipseAMS(contour), new Scalar(0, 0, 255));
-                        //Orignal.Ellipse(Cv2.FitEllipseDirect(contour), new Scalar(0, 255, 0));
-                        // Cv2.DrawContours(Orignal,new Mat[] { Mat.FromArray(contour) }, 0, new Scalar(0, 255, 0));
-                    }
-                }
-                else
-                {
-                    contours[0].GetArray(out Point[] contour);
-                    int argmax = Array.IndexOf(contour, contour.MaxBy(pt => pt.Y));
-
-                    int begin = argmax - 10;
-                    int end = argmax + 10;
-
-                    if (begin > 0 && end < contour.Length)
-                    {
-                        contour = contour.SubArray(begin, end);
-
-                        Cv2.MinEnclosingCircle(contour, out Point2f center, out float radius);
-
-                        Orignal.Circle(center.ToPoint(), (int)radius,new Scalar(0,255,0));
-
-                        //Orignal.Circle(contour.First(), 5, new Scalar(255, 0, 0), -1);
-                        //Orignal.Circle(contour.Last(), 5, new Scalar(255, 0, 0), -1);
-
-                        //Orignal.Ellipse(Cv2.FitEllipse(contour), new Scalar(255,0, 0));
-                        //Orignal.Ellipse(Cv2.FitEllipseAMS(contour), new Scalar(0,0, 255));
-                        //Orignal.Ellipse(Cv2.FitEllipseDirect(contour), new Scalar(0, 255, 0));
-                        Cv2.DrawContours(Orignal,new Point[][] { contour }, 0, new Scalar(0, 255, 0));
-                    }
+                    //Orignal.Ellipse(Cv2.FitEllipse(contour), new Scalar(255, 255, 0));
+                    //Orignal.Ellipse(Cv2.FitEllipseAMS(contour), new Scalar(0, 0, 255));
+                    //Orignal.Ellipse(Cv2.FitEllipseDirect(contour), new Scalar(0, 255, 0));
+                    // Cv2.DrawContours(Orignal,new Mat[] { Mat.FromArray(contour) }, 0, new Scalar(0, 255, 0));
                 }
             }
-
-            return Orignal;
+            return null;
         }
 
         static (Point2d, double) fit_LMS_Circle(Point[] contour)

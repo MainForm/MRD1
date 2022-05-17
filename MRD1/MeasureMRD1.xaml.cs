@@ -67,6 +67,11 @@ namespace MRD1
                         new Mat(),
                         new Mat(),
                     };
+                    Mat[] predicts = new Mat[2]
+                    {
+                        new Mat(),
+                        new Mat(),
+                    };
 
                     for (int i = 0; i < frames.Length; i++)
                     {
@@ -74,22 +79,17 @@ namespace MRD1
                         if (camera.IsOpened() == true)
                         {
                             camera.Read(frames[i]);
+                            predicts[i] = MainWindow.Model.PredictEye(frames[i], new OpenCvSharp.Size(640, 400));
                         }
                     }
 
+
                     for (int i = 0; i < frames.Length; i++)
                     {
-                        if (frames[i].Empty() == false)
+                        Dispatcher.Invoke(() =>
                         {
-                            var output = MainWindow.Model.PredictEye(frames[i], new OpenCvSharp.Size(640, 400));
-
-                            output = Algorithm.getPupil(output,frames[i]);
-
-                            Dispatcher.Invoke(() =>
-                            {
-                                ShowMRD1ViewModels[i].Image = WriteableBitmapConverter.ToWriteableBitmap(output);
-                            });
-                        }
+                            ShowMRD1ViewModels[i].Image = WriteableBitmapConverter.ToWriteableBitmap(frames[i]);
+                        });
                     }
                 }
             }
@@ -117,11 +117,25 @@ namespace MRD1
             {
                 case MeasureStatus.None:
                     /*
-                     * 아두이노 해당 LED 점등
+                     * 아두이노 해당 LED 반짝반짝
                      */
                     ViewModel.MeasureStatus = MeasureStatus.Ready;
                     break;
                 case MeasureStatus.Ready:
+                    /*
+                     * 아두이노 해당 LED 점등
+                     */
+
+                    Measurement newMeasurement = new Measurement
+                    {
+                        Led_Position = ViewModel.LedPosition,
+                        Patient_ID = MainWindow.selectPatient.ID,
+                        date = DateTime.Now,
+                    };
+
+                    newMeasurement.InsertDB(MainWindow.Connection);
+
+                    ViewModel.MeasuringProgress = 0;
 
                     ViewModel.MeasureStatus = MeasureStatus.Start;
                     break;

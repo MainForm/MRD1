@@ -18,7 +18,7 @@
              mc:Ignorable="d" 
              
              xmlns:ViewModel="clr-namespace:MRD1.ViewModel"
-             d:DataContext="{d:DesignInstance ViewModel:SelectPatientViewModel}"
+             d:DataContext="{d:DesignInstance ViewModel:MeasureMRD1ViewModel}"
              
              d:DesignHeight="1080" d:DesignWidth="1850" Unloaded="UserControl_Unloaded">
     <UserControl.Resources>
@@ -59,10 +59,8 @@
                     Content="{Binding MeasureStatus, Converter={StaticResource MeasureButtonConverter}}"
                     Height="60" Cursor="Hand" Click="StartMeasuringButton_Clicked">
                 </Button>
-                <TextBlock
-                    DockPanel.Dock="Top">
-                    안규빈
-                </TextBlock>
+                <TextBlock Text="{Binding Patient_name}"
+                    DockPanel.Dock="Top"/>
 
                 <MaterialDesign:Card Margin="0 10">
                     <TabControl

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MRD1.ViewModel
 {
@@ -28,15 +29,15 @@ namespace MRD1.ViewModel
             get => __LedPosition;
             set => SetProperty(ref __LedPosition, value);
         }
-    }
 
-    public enum MeasureStatus
-    {
-        None,Ready,Start
-    }
+        public string Patient_name
+        {
+            get
+            {
+                MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
 
-    public enum LedPosition
-    {
-        Top,Middle,Bottom
+                return mainWindow?.selectPatient.Name;
+            }
+        }
     }
 }

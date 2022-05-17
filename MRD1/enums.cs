@@ -11,4 +11,13 @@ namespace MRD1
         Left,
         Right,
     }
+    public enum MeasureStatus
+    {
+        None, Ready, Start
+    }
+
+    public enum LedPosition
+    {
+        Top, Middle, Bottom
+    }
 }
