@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
+using System.Collections.ObjectModel;
+
 namespace MRD1.ViewModel
 {
     public class MeasureMRD1ViewModel : BaseViewModel
@@ -38,6 +40,22 @@ namespace MRD1.ViewModel
 
                 return mainWindow?.selectPatient.Name;
             }
+        }
+
+        private Measurement __currentMeasurement;
+
+        public Measurement CurrentMeasurement
+        {
+            get => __currentMeasurement;
+            set => SetProperty(ref __currentMeasurement, value);
+        }
+
+        private ObservableCollection<RecordData[]> __current_data;
+
+        public ObservableCollection<RecordData[]> CurrentData
+        {
+            get => __current_data;
+            set => SetProperty(ref __current_data, value);
         }
     }
 }

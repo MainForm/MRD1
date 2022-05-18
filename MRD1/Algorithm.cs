@@ -65,6 +65,32 @@ namespace MRD1
 
             return (new Point2d(cx, cy), r);
         }
+
+        public static int? getMRD1(Mat predict, Point pupil_center)
+        {
+            int direction = (predict.At<byte>(pupil_center.Y,pupil_center.X) == 0) ? 1 : -1;
+            int iy = 0;
+
+            for(iy = pupil_center.Y; ; iy += direction)
+            {
+                if (iy < 0 || iy >= predict.Height)
+                    return null;
+                
+
+                if(direction == 1)
+                {
+                    if (predict.At<byte>(iy, pupil_center.X) != 0)
+                        break;
+                }
+                else
+                {
+                    if (predict.At<byte>(iy, pupil_center.X) == 0)
+                        break;
+                }
+            }
+
+            return pupil_center.Y - iy;
+        }
     }
 
     public static class ArrayExtention

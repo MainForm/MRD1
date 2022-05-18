@@ -94,14 +94,7 @@ namespace MRD1.ViewModel
             string sql = $"DELETE FROM patient_tb WHERE ID={patient.ID}";
             using MySqlCommand command = new MySqlCommand(sql, connection);
 
-            try
-            {
-                using MySqlDataReader myReader = command.ExecuteReader();
-            }
-            catch (Exception ex)
-            {
-
-            }
+            command.ExecuteNonQuery();
         }
 
         public void InsertPatient(Patient patient)
@@ -111,14 +104,7 @@ namespace MRD1.ViewModel
                             $",'{patient.Gender}',\"{patient.Callnumber}\");";
             using MySqlCommand command = new MySqlCommand(sql, connection);
 
-            try
-            {
-                using MySqlDataReader myReader = command.ExecuteReader();
-            }
-            catch (Exception ex)
-            {
-
-            }
+            command.ExecuteNonQuery();
 
             updatePatient();
         }

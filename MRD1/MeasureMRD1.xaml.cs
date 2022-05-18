@@ -35,7 +35,9 @@ namespace MRD1
             new ShowMRD1ViewModel()
         };
 
-        Thread threadPlay;
+        CancellationTokenSource cancelToken = new CancellationTokenSource();
+
+        Task threadPlay;
 
         public MeasureMRD1()
         {
@@ -46,14 +48,14 @@ namespace MRD1
             LeftEyeContentControl.Content = new ShowMRD1(ShowMRD1ViewModels[0]);
             RightEyeContentControl.Content = new ShowMRD1(ShowMRD1ViewModels[1]);
 
-            threadPlay = new Thread(threadFunctionPlay);
+            threadPlay = new Task(threadFunctionPlay, cancelToken.Token);
             threadPlay.Start();
 
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            threadPlay?.Interrupt();
+            cancelToken.Cancel();
         }
 
         private void threadFunctionPlay()
@@ -62,6 +64,8 @@ namespace MRD1
             {
                 while (true)
                 {
+                    cancelToken.Token.ThrowIfCancellationRequested();
+
                     Mat[] frames = new Mat[2]
                     {
                         new Mat(),
@@ -83,25 +87,88 @@ namespace MRD1
                         }
                     }
 
-
-                    for (int i = 0; i < frames.Length; i++)
+                    var postProcess = Task.Factory.StartNew(() =>
                     {
-                        Dispatcher.Invoke(() =>
+                        cancelToken.Token.ThrowIfCancellationRequested();
+                        RecordData[] records = new RecordData[2]
                         {
-                            ShowMRD1ViewModels[i].Image = WriteableBitmapConverter.ToWriteableBitmap(frames[i]);
-                        });
-                    }
+                            new RecordData()
+                            {
+                                Measurement_ID = ViewModel.CurrentMeasurement?.ID.Value,
+                                Eye_Position = CameraPosition.Left,
+                                index = ViewModel.MeasuringProgress,
+                                image = frames[0],
+                            },
+                            new RecordData()
+                            {
+                                Measurement_ID = ViewModel.CurrentMeasurement?.ID.Value,
+                                Eye_Position = CameraPosition.Right,
+                                index = ViewModel.MeasuringProgress,
+                                image = frames[1],
+                            },
+                        };
+
+                        for (int i = 0; i < predicts.Length; i++)
+                        {
+                            var Pupils = Algorithm.getPupil(predicts[i]);
+
+                            if (Pupils == null)
+                            {
+                                records[i] = null;
+                                break;
+                            }
+
+                            var center = Pupils?.Item1.ToPoint();
+
+                            records[i].pupil_radius = (int)Pupils?.Item2;
+                            records[i].pupil_center = center.Value;
+
+                            int? mrd1 = Algorithm.getMRD1(predicts[i], records[i].pupil_center);
+
+                            if (mrd1 == null)
+                            {
+                                records[i] = null;
+                                break;
+                            }
+
+                            records[i].mrd1 = mrd1.Value;
+                        }
+
+                        
+                        if (ViewModel.MeasureStatus == MeasureStatus.Start)
+                        {
+                            if (records[0] != null && records[1] != null)
+                            {
+                                ViewModel.MeasuringProgress++;
+
+                                records[0].InsertDB(MainWindow.Connection);
+                                records[1].InsertDB(MainWindow.Connection);
+
+                                if (ViewModel.MeasuringProgress == 50)
+                                {
+                                    ViewModel.MeasuringProgress = 0;
+                                    ViewModel.MeasureStatus = MeasureStatus.None;
+                                }
+                            }
+                        }
+
+                        try
+                        {
+                            for (int i = 0; i < frames.Length; i++)
+                            {
+                                Mat result = records[i]?.drawResult() ?? frames[i];
+                                Dispatcher.Invoke(() =>
+                                {
+                                    ShowMRD1ViewModels[i].Image = WriteableBitmapConverter.ToWriteableBitmap(result);
+                                });
+                            }
+                        }
+                        catch (TaskCanceledException) { }
+                    }, cancelToken.Token);
+
                 }
             }
-            catch (ThreadInterruptedException)
-            {
-
-            }
-            catch (TaskCanceledException)
-            {
-
-            }
-            finally
+            catch (OperationCanceledException)
             {
 
             }
@@ -126,14 +193,14 @@ namespace MRD1
                      * 아두이노 해당 LED 점등
                      */
 
-                    Measurement newMeasurement = new Measurement
+                    ViewModel.CurrentMeasurement = new Measurement
                     {
                         Led_Position = ViewModel.LedPosition,
                         Patient_ID = MainWindow.selectPatient.ID,
                         date = DateTime.Now,
                     };
 
-                    newMeasurement.InsertDB(MainWindow.Connection);
+                    ViewModel.CurrentMeasurement.InsertDB(MainWindow.Connection);
 
                     ViewModel.MeasuringProgress = 0;
 
