@@ -27,7 +27,9 @@ namespace MRD1
     /// </summary>
     public partial class MeasureMRD1 : UserControl
     {
-        public MeasureMRD1ViewModel ViewModel = new MeasureMRD1ViewModel();
+        object mysql_Lock = new object();
+
+        public MeasureMRD1ViewModel ViewModel;
         MainWindow MainWindow = Application.Current.MainWindow as MainWindow;
         ShowMRD1ViewModel[] ShowMRD1ViewModels = new ShowMRD1ViewModel[2]
         {
@@ -43,6 +45,7 @@ namespace MRD1
         {
             InitializeComponent();
 
+            ViewModel = new MeasureMRD1ViewModel(MainWindow.Connection);
             DataContext = ViewModel;
 
             LeftEyeContentControl.Content = new ShowMRD1(ShowMRD1ViewModels[0]);
@@ -141,11 +144,18 @@ namespace MRD1
                             {
                                 ViewModel.MeasuringProgress++;
 
-                                records[0].InsertDB(MainWindow.Connection);
-                                records[1].InsertDB(MainWindow.Connection);
+                                lock (mysql_Lock)
+                                {
+                                    records[0].InsertDB(MainWindow.Connection);
+                                    records[1].InsertDB(MainWindow.Connection);
+                                }
 
                                 if (ViewModel.MeasuringProgress == 50)
                                 {
+                                    Dispatcher.Invoke(() =>
+                                    {
+                                        MainWindow.MainSnackbar.MessageQueue.Enqueue($"검사 완료");
+                                    });
                                     ViewModel.MeasuringProgress = 0;
                                     ViewModel.MeasureStatus = MeasureStatus.None;
                                 }
@@ -178,7 +188,6 @@ namespace MRD1
         {
             Button button = sender as Button;
 
-            MainWindow.MainSnackbar.MessageQueue.Enqueue($"now Position : {ViewModel.LedPosition.ToString()}");
 
             switch (ViewModel.MeasureStatus)
             {
@@ -201,6 +210,7 @@ namespace MRD1
                     };
 
                     ViewModel.CurrentMeasurement.InsertDB(MainWindow.Connection);
+                    ViewModel.getListMeasurement(ViewModel.LedPosition).Add(ViewModel.CurrentMeasurement);
 
                     ViewModel.MeasuringProgress = 0;
 
@@ -208,7 +218,6 @@ namespace MRD1
                     break;
                 case MeasureStatus.Start:
 
-                    ViewModel.MeasureStatus = MeasureStatus.None;
                     break;
             }
         }

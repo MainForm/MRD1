@@ -43,7 +43,7 @@ namespace MRD1
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            MainWindow.MainSnackbar.MessageQueue.Enqueue("unload Select page");
+
         }
 
         private void SelectPatientListViewItem(object sender, RoutedEventArgs e)

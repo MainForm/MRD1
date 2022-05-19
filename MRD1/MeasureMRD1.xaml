@@ -24,6 +24,7 @@
     <UserControl.Resources>
         <Converter:MeasureButtonConverter x:Key="MeasureButtonConverter"/>
         <Converter:LedPoisitionConverter x:Key="LedPoisitionConverter"/>
+        <Converter:DateTimeToYYYYMMDDConverter x:Key="DateTimeToYYYYMMDDConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -67,13 +68,52 @@
                         SelectedIndex="{Binding LedPosition, Converter={StaticResource LedPoisitionConverter}, Mode=TwoWay}"
                         TabStripPlacement="Bottom">
                         <TabItem Header="Top">
-                            
+                            <ListView ItemsSource="{Binding TopMeasurement}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="검사 날짜" DisplayMemberBinding="{Binding date ,Converter={StaticResource DateTimeToYYYYMMDDConverter}}"/>
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Background="LightGreen" Content="선택"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
                         </TabItem>
                         <TabItem Header="Middle">
-
+                            <ListView ItemsSource="{Binding MiddleMeasurement}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="검사 날짜" DisplayMemberBinding="{Binding date ,Converter={StaticResource DateTimeToYYYYMMDDConverter}}"/>
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Background="LightGreen" Content="선택"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
                         </TabItem>
                         <TabItem Header="Bottom">
-
+                            <ListView ItemsSource="{Binding BottomMeasurement}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="검사 날짜" DisplayMemberBinding="{Binding date ,Converter={StaticResource DateTimeToYYYYMMDDConverter}}"/>
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Background="LightGreen" Content="선택"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
                         </TabItem>
                     </TabControl>
                 </MaterialDesign:Card>
