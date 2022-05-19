@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
+using System.Collections.ObjectModel;
+
 namespace MRD1.ViewModel
 {
     public class ShowMRD1ViewModel : BaseViewModel
@@ -18,6 +20,21 @@ namespace MRD1.ViewModel
             {
                 SetProperty(ref __Image, value);
             }
+        }
+
+        private ObservableCollection<RecordData> __data;
+
+        public ObservableCollection<RecordData> RecordData
+        {
+            get => __data;
+            set => SetProperty(ref __data, value);
+        }
+
+        private int? __mrd1 = null;
+        public int? MRD1
+        {
+            get => __mrd1;
+            set => SetProperty(ref __mrd1, value);
         }
     }
 }

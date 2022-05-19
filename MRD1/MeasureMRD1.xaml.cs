@@ -1,24 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using MRD1.ViewModel;
+using OpenCvSharp;
+using OpenCvSharp.WpfExtensions;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-using MRD1.ViewModel;
-
-using OpenCvSharp;
-using OpenCvSharp.WpfExtensions;
-
-using System.Threading;
 
 namespace MRD1
 {
@@ -137,7 +124,7 @@ namespace MRD1
                             records[i].mrd1 = mrd1.Value;
                         }
 
-                        
+
                         if (ViewModel.MeasureStatus == MeasureStatus.Start)
                         {
                             if (records[0] != null && records[1] != null)
@@ -166,6 +153,7 @@ namespace MRD1
                         {
                             for (int i = 0; i < frames.Length; i++)
                             {
+                                ShowMRD1ViewModels[i].MRD1 = records[i]?.mrd1;
                                 Mat result = records[i]?.drawResult() ?? frames[i];
                                 Dispatcher.Invoke(() =>
                                 {
