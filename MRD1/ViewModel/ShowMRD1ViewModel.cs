@@ -8,6 +8,9 @@ using System.Windows.Media;
 
 using System.Collections.ObjectModel;
 
+using LiveCharts;
+using LiveCharts.Wpf;
+
 namespace MRD1.ViewModel
 {
     public class ShowMRD1ViewModel : BaseViewModel
@@ -35,6 +38,24 @@ namespace MRD1.ViewModel
         {
             get => __mrd1;
             set => SetProperty(ref __mrd1, value);
+        }
+
+        public ChartValues<int> MRD1_chartData
+        {
+            get
+            {
+                if (RecordData == null)
+                    return null;
+
+                return new ChartValues<int>(from data in __data select data.mrd1);
+            }
+        }
+
+        public void addRecordData(RecordData data)
+        {
+            __data.Add(data);
+
+            NotifyPropertyChanged("MRD1_chartData");
         }
     }
 }

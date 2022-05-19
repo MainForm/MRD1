@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
+using System.Collections.ObjectModel;
+
 namespace MRD1
 {
     /// <summary>
@@ -129,6 +131,11 @@ namespace MRD1
                         {
                             if (records[0] != null && records[1] != null)
                             {
+                                for(int i = 0; i < records.Length; i++)
+                                {
+                                    ShowMRD1ViewModels[i].addRecordData(records[i]);
+                                }
+
                                 ViewModel.MeasuringProgress++;
 
                                 lock (mysql_Lock)
@@ -196,6 +203,11 @@ namespace MRD1
                         Patient_ID = MainWindow.selectPatient.ID,
                         date = DateTime.Now,
                     };
+
+                    for(int i = 0; i < ShowMRD1ViewModels.Length; i++)
+                    {
+                        ShowMRD1ViewModels[i].RecordData = new ObservableCollection<RecordData>();
+                    }
 
                     ViewModel.CurrentMeasurement.InsertDB(MainWindow.Connection);
                     ViewModel.getListMeasurement(ViewModel.LedPosition).Add(ViewModel.CurrentMeasurement);
