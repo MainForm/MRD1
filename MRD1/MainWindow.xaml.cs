@@ -52,6 +52,7 @@ namespace MRD1
         }
 
         public Patient selectPatient { get; set; } = null;
+        public int? selectMeasureID { get; set; } = null;
 
         public MainWindow()
         {

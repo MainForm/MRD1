@@ -18,11 +18,255 @@
              xmlns:ViewModel="clr-namespace:MRD1.ViewModel"
              d:DataContext="{d:DesignInstance ViewModel:ReplayDataViewModel}"
              
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             
              d:DesignHeight="1080" d:DesignWidth="1850">
     <Grid>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
-                   FontSize="32">
-            This is ReplayData page
-        </TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0">
+            <Button DockPanel.Dock="Top" Content="돌아가기" Margin="5" Height="60"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}"
+                      Margin="5" Header="환자 정보" Grid.Row="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Text="이름" FontSize="18"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Text="검사 횟수" FontSize="18"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Text="마지막 검사" FontSize="18"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}"
+                      Margin="5" Header="데이터 요약" Grid.Row="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </DockPanel>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="600"/>
+                <RowDefinition Height="300"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--Eye Image-->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}"
+                          Header="Left Eye" Grid.Column="0" Margin="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="400"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="auto" VerticalScrollBarVisibility="Auto">
+                            <Image x:Name="LeftEyeImage" Stretch="Fill"
+                                   Source="{Binding LeftEyeImage}" MouseWheel="LeftEyeImage_MouseWheel">
+                                <Image.LayoutTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform x:Name="LeftEyeScaleTransform" ScaleX="0.5" ScaleY="0.5"/>
+                                    </TransformGroup>
+                                </Image.LayoutTransform>
+                            </Image>
+                        </ScrollViewer>
+                        <Grid Margin="20 0" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="MRD1" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="동공" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                            <Grid Grid.Row="0" Grid.Column="1">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <TextBox x:Name="LeftEyeMRD1" TextAlignment="Right" Width="100"
+                                             Text="{Binding LeftEyeMRD1,UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="1">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <TextBlock Text="X : "/>
+                                    <TextBox x:Name="LeftPupilXValue"  Width="100" 
+                                             Text="{Binding LeftEyePupilCenterX,UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBlock Text="Y : "/>
+                                    <TextBox x:Name="LeftPupilYValue" Width="100" 
+                                             Text="{Binding LeftEyePupilCenterY,UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Text="반지름 : "/>
+                                    <TextBox x:Name="LeftPupilRadiusValue" Width="100" 
+                                             Text="{Binding LeftEyePupilRadius,UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="0" Grid.Column="2">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="오버레이"/>
+                                    <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                  IsChecked="{Binding isLeftEyeOverlay}"/>
+                                </StackPanel>
+                            </Grid>
+                            <Button Grid.Row="1" Grid.Column="2" Content="적용" Height="60"/>
+                        </Grid>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}"
+                          Header="Right Eye" Grid.Column="1" Margin="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="400"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="auto" VerticalScrollBarVisibility="Auto">
+                            <Image x:Name="RightEyeImage" Stretch="Fill"
+                                   Source="{Binding RightEyeImage}" MouseWheel="RightEyeImage_MouseWheel">
+                                <Image.LayoutTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform x:Name="RightEyeScaleTransform" ScaleX="0.5" ScaleY="0.5"/>
+                                    </TransformGroup>
+                                </Image.LayoutTransform>
+                            </Image>
+                        </ScrollViewer>
+                        <Grid Margin="20 0" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="MRD1" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="동공" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                            <Grid Grid.Row="0" Grid.Column="1">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <TextBox x:Name="RightEyeMRD1" TextAlignment="Right" Width="100"
+                                             Text="{Binding RightEyeMRD1}"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="1">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <TextBlock Text="X : "/>
+                                    <TextBox x:Name="RightPupilXValue" Width="100"
+                                             Text="{Binding RightEyePupilCenterX}"/>
+                                    <TextBlock Text="Y : "/>
+                                    <TextBox x:Name="RightPupilYValue" Width="100"
+                                             Text="{Binding RightEyePupilCenterY}"/>
+                                    <TextBlock Text="반지름 : "/>
+                                    <TextBox x:Name="RightPupilRadiusValue" Width="100"
+                                             Text="{Binding RightEyePupilRadius}"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="0" Grid.Column="2">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="오버레이"/>
+                                    <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                  IsChecked="{Binding isRightEyeOverlay}"/>
+                                </StackPanel>
+                            </Grid>
+                            <Button Grid.Row="1" Grid.Column="2" Content="적용" Height="60"/>
+                        </Grid>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+            <Grid Grid.Row="1">
+                <lvc:CartesianChart Grid.Row="2">
+                    <lvc:CartesianChart.Series>
+                        <lvc:LineSeries Title="Left" Values="{Binding LeftEyeMRD1ChartValue}"/>
+                        <lvc:LineSeries Title="Right" Values="{Binding RightEyeMRD1ChartValue}"/>
+                    </lvc:CartesianChart.Series>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis >
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+            </Grid>
+            <DockPanel Grid.Row="2">
+                <Slider Margin="10 0 2 0" DockPanel.Dock="Top"
+                      Value="{Binding index}"
+                      Minimum="0"
+                      Maximum="{Binding DataCount}"
+                      Style="{StaticResource MaterialDesignDiscreteSlider}"
+                      TickFrequency="{Binding DiscreteHorizontal.TickFrequency}"
+                      TickPlacement="BottomRight" />
+
+                <Grid>
+                    <Button VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20"
+                            Style="{StaticResource MaterialDesignRaisedLightButton}"
+                            MaterialDesign:ButtonAssist.CornerRadius="5" 
+                            Background="DeepPink" BorderThickness="0" Content="삭제"
+                            FontSize="24" Height="60"/>
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Button Width="100" Height="100" 
+                              Style="{DynamicResource MaterialDesignIconButton}"
+                              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                              Click="previousData_Clicked">
+                            <MaterialDesign:PackIcon Kind="PreviousTitle" Width="80" Height="80" 
+                                                     HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Button>
+                        <Button Width="100" Height="100" 
+                              Style="{DynamicResource MaterialDesignIconButton}"
+                              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="playData_clicked">
+                            <MaterialDesign:PackIcon Kind="Play" Width="80" Height="80" 
+                                                     HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Button>
+                        <Button Width="100" Height="100" 
+                              Style="{DynamicResource MaterialDesignIconButton}"
+                              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" 
+                                Click="nextData_clicked">
+                            <MaterialDesign:PackIcon Kind="NextTitle" Width="80" Height="80" 
+                                                     HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </DockPanel>
+        </Grid>
     </Grid>
 </UserControl>

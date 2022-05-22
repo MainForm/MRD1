@@ -75,7 +75,7 @@
                                         <GridViewColumn>
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Background="LightGreen" Content="선택"/>
+                                                    <Button Background="LightGreen" Content="선택" Click="SelectMeasureButton_Clicked"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -91,7 +91,7 @@
                                         <GridViewColumn>
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Background="LightGreen" Content="선택"/>
+                                                    <Button Background="LightGreen" Content="선택" Click="SelectMeasureButton_Clicked"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -107,7 +107,7 @@
                                         <GridViewColumn>
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Background="LightGreen" Content="선택"/>
+                                                    <Button Background="LightGreen" Content="선택" Click="SelectMeasureButton_Clicked"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>

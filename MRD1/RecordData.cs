@@ -61,7 +61,7 @@ namespace MRD1
         public int mrd1 { get; set; }
         public Mat image { get; set; }
 
-        public Mat drawResult()
+        public Mat drawResult(int thinkness = 3)
         {
             if (image.Empty())
                 return null;
@@ -73,13 +73,13 @@ namespace MRD1
 
             image.CopyTo(result);
 
-            result.Circle(pupil_center, pupil_radius, new Scalar(0, 0, 255));
-            result.DrawMarker(pupil_center, new Scalar(0, 255, 255));
+            result.Circle(pupil_center, pupil_radius, new Scalar(0, 0, 255), thinkness);
+            result.DrawMarker(pupil_center, new Scalar(0, 255, 255),markerSize: 40,thickness: thinkness);
 
             Point ptMRD1 = new Point(pupil_center.X, pupil_center.Y - mrd1);
 
-            result.DrawMarker(ptMRD1, new Scalar(0, 255, 255));
-            result.Line(pupil_center, ptMRD1, new Scalar(255, 0, 0));
+            result.DrawMarker(ptMRD1, new Scalar(0, 255, 255), markerSize: 40, thickness: thinkness);
+            result.Line(pupil_center, ptMRD1, new Scalar(255, 0, 0),thinkness);
             
             return result;
         }
@@ -107,6 +107,11 @@ namespace MRD1
             cmd.Parameters.AddWithValue("@MRD1", mrd1);
 
             cmd.ExecuteNonQuery();
+        }
+
+        public void updateDB()
+        {
+
         }
     }
 }

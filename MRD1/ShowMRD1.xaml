@@ -46,6 +46,9 @@
             <lvc:CartesianChart.Series>
                 <lvc:LineSeries Values="{Binding MRD1_chartData}"/>
             </lvc:CartesianChart.Series>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis />
+            </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
     </Grid>
 </UserControl>

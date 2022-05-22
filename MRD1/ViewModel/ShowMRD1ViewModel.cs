@@ -39,7 +39,6 @@ namespace MRD1.ViewModel
             get => __mrd1;
             set => SetProperty(ref __mrd1, value);
         }
-
         public ChartValues<int> MRD1_chartData
         {
             get
@@ -50,6 +49,7 @@ namespace MRD1.ViewModel
                 return new ChartValues<int>(from data in __data select data.mrd1);
             }
         }
+
 
         public void addRecordData(RecordData data)
         {

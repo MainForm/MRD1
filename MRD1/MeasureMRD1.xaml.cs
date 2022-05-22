@@ -221,5 +221,19 @@ namespace MRD1
                     break;
             }
         }
+
+        private void SelectMeasureButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            Measurement data = button.DataContext as Measurement;
+
+            if (data == null)
+                return;
+
+            MainWindow.selectMeasureID = data.ID;
+
+            MainWindow.ReplayDataListViewItem.IsSelected = true;
+        }
     }
 }

@@ -114,7 +114,7 @@
                                            FontSize="24"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem x:Name="MeasureMRD1ListViewItem" 
+                        <ListViewItem x:Name="MeasureMRD1ListViewItem"  Visibility="Collapsed"
                                       Height="60" Selected="MeasureMRD1ListViewItem_Selected">
                             <StackPanel Orientation="Horizontal">
                                 <MaterialDesign:PackIcon 
@@ -124,7 +124,7 @@
                                            FontSize="24"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem x:Name="ReplayDataListViewItem"
+                        <ListViewItem x:Name="ReplayDataListViewItem" Visibility="Collapsed"
                                       Height="60" Selected="ReplayDataListViewItem_Selected">
                             <StackPanel Orientation="Horizontal">
                                 <MaterialDesign:PackIcon 
