@@ -105,5 +105,16 @@ namespace MRD1
 
             return dest;
         }
+
+        public static double standardDeviation(this IEnumerable<int> sequence)
+        {
+            if (sequence.Count() != 0)
+            {
+                double average = sequence.Average();
+                double sum = sequence.Sum(d => Math.Pow(d - average, 2));
+                return Math.Sqrt((sum) / sequence.Count());
+            }
+            return -1;
+        }
     }
 }

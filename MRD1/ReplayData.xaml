@@ -76,9 +76,51 @@
                 </GroupBox>
                 <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}"
                       Margin="5" Header="LeftEye Infomation" Grid.Row="1">
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="MRD1 평균"
+                                   VerticalAlignment="Center" FontSize="18"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="MRD1 편차"
+                                   VerticalAlignment="Center" FontSize="18"/>
+
+                        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
+                                   FontSize="18" Text="{Binding LeftEyeMRD1Average}"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
+                                   FontSize="18" Text="{Binding LeftEyeMRD1StandardDeviation}"/>
+                    </Grid>
                 </GroupBox>
                 <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}"
                       Margin="5" Header="RightEye Infomation" Grid.Row="2">
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="MRD1 평균"
+                                   VerticalAlignment="Center" FontSize="18"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="MRD1 편차"
+                                   VerticalAlignment="Center" FontSize="18"/>
+
+                        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
+                                   FontSize="18" Text="{Binding RightEyeMRD1Average}"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
+                                   FontSize="18" Text="{Binding RightEyeMRD1StandardDeviation}"/>
+                    </Grid>
                 </GroupBox>
             </Grid>
         </DockPanel>

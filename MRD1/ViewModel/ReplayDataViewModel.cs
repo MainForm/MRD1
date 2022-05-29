@@ -266,6 +266,8 @@ namespace MRD1.ViewModel
                 SelectLeftEyeData.mrd1 = value;
                 NotifyPropertyChanged("LeftEyeMRD1");
                 NotifyPropertyChanged("LeftEyeImage");
+                NotifyPropertyChanged("LeftEyeMRD1Average");
+                NotifyPropertyChanged("LeftEyeMRD1StandardDeviation");
             }
         }
 
@@ -306,10 +308,34 @@ namespace MRD1.ViewModel
             }
         }
 
+        public double LeftEyeMRD1Average
+        {
+            get
+            {
+                var LeftEyeMRD1 = from mrd1 in __RecordData[0] select mrd1.mrd1;
+
+                return LeftEyeMRD1.Average();
+            }
+        }
+
+        public double LeftEyeMRD1StandardDeviation
+        {
+            get
+            {
+                var LeftEyeMRD1 = from mrd1 in __RecordData[0] select mrd1.mrd1;
+
+                return LeftEyeMRD1.standardDeviation();
+            }
+        }
+
         public void updateLeftEyeData()
         {
             __RecordData[0][index] = SelectLeftEyeData;
             __RecordData[0][index].updateDB(connection);
+
+            NotifyPropertyChanged("LeftEyeMRD1ChartValue");
+            NotifyPropertyChanged("LeftEyeMRD1Average");
+            NotifyPropertyChanged("LeftEyeMRD1StandardDeviation");
         }
 
         #endregion
@@ -365,10 +391,34 @@ namespace MRD1.ViewModel
             }
         }
 
+        public double RightEyeMRD1Average
+        {
+            get
+            {
+                var RightEyeMRD1 = from mrd1 in __RecordData[1] select mrd1.mrd1;
+
+                return RightEyeMRD1.Average();
+            }
+        }
+
+        public double RightEyeMRD1StandardDeviation
+        {
+            get
+            {
+                var RightEyeMRD1 = from mrd1 in __RecordData[1] select mrd1.mrd1;
+
+                return RightEyeMRD1.standardDeviation();
+            }
+        }
+
         public void updateRightEyeData()
         {
             __RecordData[1][index] = SelectRightEyeData;
             __RecordData[1][index].updateDB(connection);
+
+            NotifyPropertyChanged("RightEyeMRD1ChartValue");
+            NotifyPropertyChanged("RightEyeMRD1Average");
+            NotifyPropertyChanged("RightEyeMRD1StandardDeviation");
         }
 
         #endregion
@@ -417,10 +467,18 @@ namespace MRD1.ViewModel
             __RecordData[0].RemoveAt(index);
             __RecordData[1].RemoveAt(index);
 
-            index = index;
+            if (index == 0)
+                index = index;
+            else
+                index = index - 1;
+
             NotifyPropertyChanged("LeftEyeMRD1ChartValue");
             NotifyPropertyChanged("RightEyeMRD1ChartValue");
             NotifyPropertyChanged("DataCount");
+            NotifyPropertyChanged("LeftEyeMRD1Average");
+            NotifyPropertyChanged("LeftEyeMRD1StandardDeviation");
+            NotifyPropertyChanged("RightEyeMRD1Average");
+            NotifyPropertyChanged("RightEyeMRD1StandardDeviation");
         }
     }
 

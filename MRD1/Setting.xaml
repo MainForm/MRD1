@@ -17,7 +17,7 @@
              
              xmlns:ViewModel="clr-namespace:MRD1.ViewModel"
              d:DataContext="{d:DesignInstance ViewModel:SettingViewModel}"
-             d:DesignHeight="1080" d:DesignWidth="1850">
+             d:DesignHeight="1080" d:DesignWidth="1850" Unloaded="UserControl_Unloaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="800"/>
@@ -35,7 +35,7 @@
                         <RowDefinition Height="500"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Image Grid.Row="0" x:Name="LeftCameraIamge"/>
+                    <Image Grid.Row="0" x:Name="LeftCameraIamge" Source="{Binding LeftImage}"/>
 
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
@@ -53,8 +53,9 @@
                         <DockPanel Grid.Row="1" VerticalAlignment="Center">
                             <Label DockPanel.Dock="Left" Content="밝기" />
                             <TextBlock DockPanel.Dock="Right" Width="50"
-                                       HorizontalAlignment="Right"/>
-                            <Slider Minimum="0" Maximum="100" Value="50" 
+                                       HorizontalAlignment="Right" Text="{Binding leftCameraBrightness}"/>
+                            <Slider Minimum="-15" Maximum="15"  Value="{Binding leftCameraBrightness, Mode=TwoWay}" 
+                                    TickFrequency="1" IsSnapToTickEnabled="True"
                                     VerticalAlignment="Center"/>
                         </DockPanel>
 
@@ -62,7 +63,7 @@
                             <Label DockPanel.Dock="Left" Content="노출" />
                             <TextBlock DockPanel.Dock="Right" Width="50"
                                        HorizontalAlignment="Right"/>
-                            <Slider Minimum="0" Maximum="100" Value="50" 
+                            <Slider Minimum="0" Maximum="100" Value="50" TickFrequency="1" IsSnapToTickEnabled="True"
                                     VerticalAlignment="Center"/>
                         </DockPanel>
 
@@ -78,7 +79,7 @@
                         <RowDefinition Height="500"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Image Grid.Row="0" x:Name="RightCameraIamge"/>
+                    <Image Grid.Row="0" x:Name="RightCameraIamge" Source="{Binding RightImage}"/>
 
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
@@ -96,8 +97,9 @@
                         <DockPanel Grid.Row="1" VerticalAlignment="Center">
                             <Label DockPanel.Dock="Left" Content="밝기" />
                             <TextBlock DockPanel.Dock="Right" Width="50"
-                                       HorizontalAlignment="Right"/>
-                            <Slider Minimum="0" Maximum="100" Value="50" 
+                                       HorizontalAlignment="Right" Text="{Binding rightCameraBrightness}"/>
+                            <Slider Minimum="-15" Maximum="15" Value="{Binding rightCameraBrightness, Mode=TwoWay}"
+                                    TickFrequency="1" IsSnapToTickEnabled="True"
                                     VerticalAlignment="Center"/>
                         </DockPanel>
 
