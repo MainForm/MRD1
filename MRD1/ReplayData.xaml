@@ -34,9 +34,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0">
-            <Button DockPanel.Dock="Top" Content="돌아가기" Margin="5" Height="60"/>
+            <Button DockPanel.Dock="Top" Content="돌아가기" Margin="5" Height="60" Click="Goback_clicked"/>
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
@@ -71,23 +72,13 @@
                         <TextBlock Grid.Row="2" Grid.Column="1"
                                    VerticalAlignment="Center" HorizontalAlignment="Left"
                                    FontSize="18" Text="{Binding LastMeasurementDay, Converter={StaticResource DateTimeToYYYYMMDD_HHMMSSConverter}}"/>
-
                     </Grid>
                 </GroupBox>
                 <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}"
-                      Margin="5" Header="데이터 요약" Grid.Row="1">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
-                        </Grid.RowDefinitions>
-                    </Grid>
+                      Margin="5" Header="LeftEye Infomation" Grid.Row="1">
+                </GroupBox>
+                <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}"
+                      Margin="5" Header="RightEye Infomation" Grid.Row="2">
                 </GroupBox>
             </Grid>
         </DockPanel>
@@ -163,7 +154,7 @@
                                                   IsChecked="{Binding isLeftEyeOverlay}"/>
                                 </StackPanel>
                             </Grid>
-                            <Button Grid.Row="1" Grid.Column="2" Content="적용" Height="60"/>
+                            <Button Grid.Row="1" Grid.Column="2" Content="적용" Height="60" Click="LeftEyeApply_clicked" Cursor="Hand"/>
                         </Grid>
                     </Grid>
                 </GroupBox>
@@ -202,7 +193,7 @@
                             <Grid Grid.Row="0" Grid.Column="1">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                                     <TextBox x:Name="RightEyeMRD1" TextAlignment="Right" Width="100"
-                                             Text="{Binding RightEyeMRD1}"/>
+                                             Text="{Binding RightEyeMRD1,UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBlock Text="mm" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Grid>
@@ -210,13 +201,13 @@
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                                     <TextBlock Text="X : "/>
                                     <TextBox x:Name="RightPupilXValue" Width="100"
-                                             Text="{Binding RightEyePupilCenterX}"/>
+                                             Text="{Binding RightEyePupilCenterX,UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBlock Text="Y : "/>
                                     <TextBox x:Name="RightPupilYValue" Width="100"
-                                             Text="{Binding RightEyePupilCenterY}"/>
+                                             Text="{Binding RightEyePupilCenterY,UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBlock Text="반지름 : "/>
                                     <TextBox x:Name="RightPupilRadiusValue" Width="100"
-                                             Text="{Binding RightEyePupilRadius}"/>
+                                             Text="{Binding RightEyePupilRadius,UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="2">
@@ -226,7 +217,7 @@
                                                   IsChecked="{Binding isRightEyeOverlay}"/>
                                 </StackPanel>
                             </Grid>
-                            <Button Grid.Row="1" Grid.Column="2" Content="적용" Height="60"/>
+                            <Button Grid.Row="1" Grid.Column="2" Content="적용" Height="60" Click="RightEyeApply_clicked"/>
                         </Grid>
                     </Grid>
                 </GroupBox>
@@ -257,7 +248,7 @@
                             Style="{StaticResource MaterialDesignRaisedLightButton}"
                             MaterialDesign:ButtonAssist.CornerRadius="5" 
                             Background="DeepPink" BorderThickness="0" Content="삭제"
-                            FontSize="24" Height="60"/>
+                            FontSize="24" Height="60" Click="DeleteData_clicked"/>
                     <StackPanel Orientation="Horizontal"
                                 VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Button Width="100" Height="100" 

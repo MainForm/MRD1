@@ -33,6 +33,8 @@ namespace MRD1.ViewModel
 
             ID = id;
             updateData(ID);
+
+            index = 0;
             
             try 
             {
@@ -149,6 +151,8 @@ namespace MRD1.ViewModel
             get => __index;
             set {
                 SetProperty(ref __index, value);
+                SelectLeftEyeData = __RecordData[0][index].Clone();
+                SelectRightEyeData = __RecordData[1][index].Clone();
 
                 //Left Eye value update
                 NotifyPropertyChanged("LeftEyeMRD1");
@@ -180,9 +184,9 @@ namespace MRD1.ViewModel
             get
             {
                 if(isLeftEyeOverlay == true)
-                    return WriteableBitmapConverter.ToWriteableBitmap(RecordData[0][index].drawResult());
+                    return WriteableBitmapConverter.ToWriteableBitmap(SelectLeftEyeData.drawResult());
                 else
-                    return WriteableBitmapConverter.ToWriteableBitmap(RecordData[0][index].image);
+                    return WriteableBitmapConverter.ToWriteableBitmap(SelectLeftEyeData.image);
             }
         }
 
@@ -203,9 +207,9 @@ namespace MRD1.ViewModel
             get
             {
                 if (isRightEyeOverlay == true)
-                    return WriteableBitmapConverter.ToWriteableBitmap(RecordData[1][index].drawResult());
+                    return WriteableBitmapConverter.ToWriteableBitmap(SelectRightEyeData.drawResult());
                 else
-                    return WriteableBitmapConverter.ToWriteableBitmap(RecordData[1][index].image);
+                    return WriteableBitmapConverter.ToWriteableBitmap(SelectRightEyeData.image);
             }
         }
 
@@ -251,13 +255,15 @@ namespace MRD1.ViewModel
 
         #region LeftEyeValue binding
 
+        private RecordData SelectLeftEyeData = null;
+
         public int LeftEyeMRD1
         {
-            get => RecordData[0][index].mrd1;
+            get => SelectLeftEyeData.mrd1;
 
             set
             {
-                RecordData[0][index].mrd1 = value;
+                SelectLeftEyeData.mrd1 = value;
                 NotifyPropertyChanged("LeftEyeMRD1");
                 NotifyPropertyChanged("LeftEyeImage");
             }
@@ -265,12 +271,12 @@ namespace MRD1.ViewModel
 
         public int LeftEyePupilCenterX
         {
-            get => RecordData[0][index].pupil_center.X;
+            get => SelectLeftEyeData.pupil_center.X;
             set
             {
-                var ptCenter = RecordData[0][index].pupil_center;
+                var ptCenter = SelectLeftEyeData.pupil_center;
                 ptCenter.X = value;
-                RecordData[0][index].pupil_center = ptCenter;
+                SelectLeftEyeData.pupil_center = ptCenter;
                 NotifyPropertyChanged("LeftEyeImage");
                 NotifyPropertyChanged("LeftEyePupilCenterX");
             }
@@ -278,12 +284,12 @@ namespace MRD1.ViewModel
 
         public int LeftEyePupilCenterY
         {
-            get => RecordData[0][index].pupil_center.Y;
+            get => SelectLeftEyeData.pupil_center.Y;
             set
             {
-                var ptCenter = RecordData[0][index].pupil_center;
+                var ptCenter = SelectLeftEyeData.pupil_center;
                 ptCenter.Y = value;
-                RecordData[0][index].pupil_center = ptCenter;
+                SelectLeftEyeData.pupil_center = ptCenter;
                 NotifyPropertyChanged("LeftEyeImage");
                 NotifyPropertyChanged("LeftEyePupilCenterY");
             }
@@ -291,26 +297,32 @@ namespace MRD1.ViewModel
 
         public int LeftEyePupilRadius
         {
-            get => RecordData[0][index].pupil_radius;
+            get => SelectLeftEyeData.pupil_radius;
             set
             {
-                var ptCenter = RecordData[0][index].pupil_radius = value;
+                var ptCenter = SelectLeftEyeData.pupil_radius = value;
                 NotifyPropertyChanged("LeftEyeImage");
                 NotifyPropertyChanged("LeftEyePupilRadius");
             }
         }
 
+        public void updateLeftEyeData()
+        {
+            __RecordData[0][index] = SelectLeftEyeData;
+            __RecordData[0][index].updateDB(connection);
+        }
+
         #endregion
 
         #region RightEyeValue binding
-
+        private RecordData SelectRightEyeData = null;
         public int RightEyeMRD1
         {
-            get => RecordData[1][index].mrd1;
+            get => SelectRightEyeData.mrd1;
 
             set
             {
-                RecordData[1][index].mrd1 = value;
+                SelectRightEyeData.mrd1 = value;
                 NotifyPropertyChanged("RightEyeMRD1");
                 NotifyPropertyChanged("RightEyeImage");
             }
@@ -318,12 +330,12 @@ namespace MRD1.ViewModel
 
         public int RightEyePupilCenterX
         {
-            get => RecordData[1][index].pupil_center.X;
+            get => SelectRightEyeData.pupil_center.X;
             set
             {
-                var ptCenter = RecordData[1][index].pupil_center;
+                var ptCenter = SelectRightEyeData.pupil_center;
                 ptCenter.X = value;
-                RecordData[1][index].pupil_center = ptCenter;
+                SelectRightEyeData.pupil_center = ptCenter;
                 NotifyPropertyChanged("RightEyeImage");
                 NotifyPropertyChanged("RightEyePupilCenterX");
             }
@@ -331,12 +343,12 @@ namespace MRD1.ViewModel
 
         public int RightEyePupilCenterY
         {
-            get => RecordData[1][index].pupil_center.Y;
+            get => SelectRightEyeData.pupil_center.Y;
             set
             {
-                var ptCenter = RecordData[1][index].pupil_center;
+                var ptCenter = SelectRightEyeData.pupil_center;
                 ptCenter.Y = value;
-                RecordData[1][index].pupil_center = ptCenter;
+                SelectRightEyeData.pupil_center = ptCenter;
                 NotifyPropertyChanged("RightEyeImage");
                 NotifyPropertyChanged("RightEyePupilCenterY");
             }
@@ -344,13 +356,19 @@ namespace MRD1.ViewModel
 
         public int RightEyePupilRadius
         {
-            get => RecordData[1][index].pupil_radius;
+            get => SelectRightEyeData.pupil_radius;
             set
             {
-                var ptCenter = RecordData[1][index].pupil_radius = value;
+                var ptCenter = SelectRightEyeData.pupil_radius = value;
                 NotifyPropertyChanged("RightEyeImage");
                 NotifyPropertyChanged("RightEyePupilRadius");
             }
+        }
+
+        public void updateRightEyeData()
+        {
+            __RecordData[1][index] = SelectRightEyeData;
+            __RecordData[1][index].updateDB(connection);
         }
 
         #endregion
@@ -390,6 +408,20 @@ namespace MRD1.ViewModel
         }
 
         #endregion
+
+        public void deleteCurrentData()
+        {
+            __RecordData[0][index].deleteDB(connection);
+            __RecordData[1][index].deleteDB(connection);
+
+            __RecordData[0].RemoveAt(index);
+            __RecordData[1].RemoveAt(index);
+
+            index = index;
+            NotifyPropertyChanged("LeftEyeMRD1ChartValue");
+            NotifyPropertyChanged("RightEyeMRD1ChartValue");
+            NotifyPropertyChanged("DataCount");
+        }
     }
 
     public static class MysqlTableExpander

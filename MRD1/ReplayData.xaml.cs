@@ -32,11 +32,11 @@ namespace MRD1
         CancellationTokenSource cancelToken;
         Task threadPlay;
 
+        MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
 
         public ReplayData()
         {
             InitializeComponent();
-            MainWindow mainWindow = Application.Current.MainWindow as MainWindow; 
 
 
             ViewModel = new ReplayDataViewModel(mainWindow.Connection,mainWindow.selectMeasureID.Value);
@@ -143,6 +143,26 @@ namespace MRD1
             {
                 cancelToken.Cancel();
             }
+        }
+
+        private void Goback_clicked(object sender, RoutedEventArgs e)
+        {
+            mainWindow.MeasureMRD1ListViewItem.IsSelected = true;
+        }
+
+        private void LeftEyeApply_clicked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.updateLeftEyeData();
+        }
+
+        private void RightEyeApply_clicked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.updateRightEyeData();
+        }
+
+        private void DeleteData_clicked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.deleteCurrentData();
         }
     }
 }

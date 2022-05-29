@@ -109,9 +109,50 @@ namespace MRD1
             cmd.ExecuteNonQuery();
         }
 
-        public void updateDB()
+        public void updateDB(MySqlConnection connection)
         {
+            if (connection == null)
+                throw new ArgumentNullException();
 
+            string query = $"UPDATE record_data SET " +
+                $"Eye_Position=@Eye_Position, pupil_center=@pupil_center, pupil_radius=@pupil_radius, MRD1=@MRD1 " +
+                $"WHERE ID={ID}";
+
+            using MySqlCommand cmd = new MySqlCommand(query, connection);
+
+            cmd.Parameters.AddWithValue("@Eye_Position", Eye_Position.ToString());
+            cmd.Parameters.AddWithValue("@pupil_center", new MySqlGeometry(pupil_center.X, pupil_center.Y));
+            cmd.Parameters.AddWithValue("@pupil_radius", pupil_radius);
+            cmd.Parameters.AddWithValue("@MRD1", mrd1);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        public void deleteDB(MySqlConnection connection)
+        {
+            if (connection == null)
+                throw new ArgumentNullException();
+
+            string query = $"DELETE FROM record_data WHERE ID={ID}";
+
+            using MySqlCommand cmd = new MySqlCommand(query, connection);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        public RecordData Clone()
+        {
+            return new RecordData()
+            {
+                index = index,
+                Eye_Position = Eye_Position,
+                ID = ID,
+                image = image,
+                Measurement_ID = Measurement_ID,
+                mrd1 = mrd1,
+                pupil_center = pupil_center,
+                pupil_radius = pupil_radius,
+            };
         }
     }
 }
