@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Windows;
+
 using System.Collections.ObjectModel;
 
 using MySql.Data.MySqlClient;
@@ -14,6 +16,7 @@ using System.Windows.Media;
 
 using LiveCharts;
 using LiveCharts.Wpf;
+using Point = OpenCvSharp.Point;
 
 namespace MRD1.ViewModel
 {
@@ -22,12 +25,80 @@ namespace MRD1.ViewModel
         private MySqlConnection connection;
         private int ID = 0;
 
+        private MainWindow MainWindow = Application.Current.MainWindow as MainWindow;
+
         public ReplayDataViewModel(MySqlConnection Connection,int id)
         {
             this.connection = Connection;
 
             ID = id;
             updateData(ID);
+            
+            try 
+            {
+                using MySqlCommand cmd = new MySqlCommand($"select count(Patient_ID) as cnt from measurement where Patient_ID={MainWindow.selectPatient.ID};", Connection);
+
+                //index = Convert.ToInt32(cmd.ExecuteScalar()) + 1; 
+                using MySqlDataReader reader =  cmd.ExecuteReader();
+
+                reader.Read();
+
+                CountOfMeasurement = reader.GetInt32(0);
+
+
+            }
+            catch (Exception ex)
+            {                
+                // 연결되지 못했거나, 오류가 발생하면 출력한다.                 
+                Console.WriteLine("{0} Exception caught.", ex);
+            }
+
+            try
+            {
+                using MySqlCommand cmd = new MySqlCommand($"SELECT date FROM measurement where Patient_ID={MainWindow.selectPatient.ID} ORDER BY ID DESC LIMIT 1", Connection);
+
+                //LastMeasurementDay = DateTime.Now;
+                using MySqlDataReader reader = cmd.ExecuteReader();
+                reader.Read();
+                LastMeasurementDay = reader.GetDateTime(0);
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+            //오른쪽 MRD1 평균값
+            try
+            {
+                using MySqlCommand cmd = new MySqlCommand($"select avg(MRD1) from record_data where Measurement_ID={MainWindow.selectPatient.ID} AND Eye_Position='Right';", Connection);
+                using MySqlDataReader reader = cmd.ExecuteReader();
+
+                reader.Read();
+
+                CountOfMeasurement = reader.GetInt32(0);
+
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+            //왼쪽 MRD1 평균값
+            try
+            {
+                using MySqlCommand cmd = new MySqlCommand($"select avg(MRD1) from record_data where Measurement_ID={MainWindow.selectPatient.ID} AND Eye_Position='Left';", Connection);
+                using MySqlDataReader reader = cmd.ExecuteReader();
+
+                reader.Read();
+
+                CountOfMeasurement = reader.GetInt32(0);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
         }
 
         public void updateData(int Measurement_id)
@@ -280,6 +351,42 @@ namespace MRD1.ViewModel
                 NotifyPropertyChanged("RightEyeImage");
                 NotifyPropertyChanged("RightEyePupilRadius");
             }
+        }
+
+        #endregion
+
+        #region Play 
+
+        bool __isPlay = false;
+
+        public bool IsPlay
+        {
+            get => __isPlay;
+            set 
+            {
+                SetProperty(ref __isPlay, value);
+            }
+        }
+
+        #endregion
+
+
+        #region 환자 정보 요약
+
+        int __CountOfMeasurement;
+
+        public int CountOfMeasurement
+        {
+            get => __CountOfMeasurement;
+            set => SetProperty(ref __CountOfMeasurement, value);
+        }
+
+        DateTime __LastMeasurementDay;
+
+        public DateTime LastMeasurementDay
+        {
+            get => __LastMeasurementDay;
+            set => SetProperty(ref __LastMeasurementDay, value);
         }
 
         #endregion

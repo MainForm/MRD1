@@ -20,7 +20,14 @@
              
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              
-             d:DesignHeight="1080" d:DesignWidth="1850">
+             xmlns:Conveter="clr-namespace:MRD1.Converter"
+             
+             d:DesignHeight="1080" d:DesignWidth="1850" Unloaded="UserControl_Unloaded">
+    <UserControl.Resources>
+        <Conveter:BleanToVisibilityConverter x:Key="BleanToVisibilityConverter"/>
+        <Conveter:NotBleanToVisibilityConverter x:Key="NotBleanToVisibilityConverter"/>
+        <Conveter:DateTimeToYYYYMMDD_HHMMSSConverter x:Key="DateTimeToYYYYMMDD_HHMMSSConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400"/>
@@ -56,6 +63,15 @@
                         <TextBlock Grid.Row="2" Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="마지막 검사" FontSize="18"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   FontSize="18" Text="{Binding CountOfMeasurement}"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="1"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   FontSize="18" Text="{Binding LastMeasurementDay, Converter={StaticResource DateTimeToYYYYMMDD_HHMMSSConverter}}"/>
+
                     </Grid>
                 </GroupBox>
                 <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}"
@@ -251,12 +267,22 @@
                             <MaterialDesign:PackIcon Kind="PreviousTitle" Width="80" Height="80" 
                                                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
-                        <Button Width="100" Height="100" 
-                              Style="{DynamicResource MaterialDesignIconButton}"
-                              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="playData_clicked">
-                            <MaterialDesign:PackIcon Kind="Play" Width="80" Height="80" 
+                        <Grid Width="100" Height="100">
+                            <Button Width="100" Height="100" 
+                                    Style="{DynamicResource MaterialDesignIconButton}"
+                                    Visibility="{Binding IsPlay,Converter={StaticResource NotBleanToVisibilityConverter}}"
+                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="playData_clicked">
+                                <MaterialDesign:PackIcon Kind="Play" Width="80" Height="80"
                                                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Button>
+                            </Button>
+                            <Button Width="100" Height="100" 
+                                    Visibility="{Binding IsPlay,Converter={StaticResource BleanToVisibilityConverter}}"
+                                    Style="{DynamicResource MaterialDesignIconButton}"
+                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="pauseData_clicked">
+                                <MaterialDesign:PackIcon Kind="Pause" Width="80" Height="80"
+                                                     HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Button>
+                        </Grid>
                         <Button Width="100" Height="100" 
                               Style="{DynamicResource MaterialDesignIconButton}"
                               IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" 

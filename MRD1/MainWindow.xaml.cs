@@ -62,11 +62,14 @@ namespace MRD1
                 cameras[i] = new VideoCapture();
 
             var LeftCamera = getCamera(CameraPosition.Left);
-            LeftCamera.Open(0);
+            LeftCamera.Open(1);
             LeftCamera.Set(VideoCaptureProperties.FrameHeight, 720);
             LeftCamera.Set(VideoCaptureProperties.FrameWidth, 1280);
 
-            cameras[1] = cameras[0]; 
+            var RightCamera = getCamera(CameraPosition.Right);
+            RightCamera.Open(0);
+            RightCamera.Set(VideoCaptureProperties.FrameHeight, 720);
+            RightCamera.Set(VideoCaptureProperties.FrameWidth, 1280);
 
             __model = new RITnet("./RITnet.onnx");
 

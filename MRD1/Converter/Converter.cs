@@ -32,6 +32,27 @@ namespace MRD1.Converter
         }
     }
 
+    public class NotBleanToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return !(bool)value ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is not Visibility)
+                return false;
+
+            Visibility visibility = (Visibility)value;
+
+            if (visibility != Visibility.Visible)
+                return true;
+
+            return false;
+        }
+    }
+
     public class DateTimeToYYYYMMDDConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -39,6 +60,23 @@ namespace MRD1.Converter
             DateTime date = (DateTime)value;
 
             return date.ToString("yyyy-MM-dd");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string datetime = (string)value;
+
+            return System.Convert.ToDateTime(datetime);
+        }
+    }
+
+    public class DateTimeToYYYYMMDD_HHMMSSConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DateTime date = (DateTime)value;
+
+            return date.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

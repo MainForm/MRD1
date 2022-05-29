@@ -18,6 +18,7 @@ using System.Diagnostics;
 using MRD1.ViewModel;
 
 using OpenCvSharp.WpfExtensions;
+using System.Threading;
 
 namespace MRD1
 {
@@ -27,7 +28,11 @@ namespace MRD1
     public partial class ReplayData : UserControl
     {
         ReplayDataViewModel ViewModel;
-        
+
+        CancellationTokenSource cancelToken;
+        Task threadPlay;
+
+
         public ReplayData()
         {
             InitializeComponent();
@@ -38,6 +43,12 @@ namespace MRD1
 
             DataContext = ViewModel;
         }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            cancelToken?.Cancel();
+        }
+
 
         private void LeftEyeImage_MouseWheel(object sender, MouseWheelEventArgs e)
         {
@@ -91,14 +102,47 @@ namespace MRD1
 
         private void nextData_clicked(object sender, RoutedEventArgs e)
         {
-            if (ViewModel.index < ViewModel.DataCount - 1)
+            if (ViewModel.index < ViewModel.DataCount)
                 ViewModel.index += 1;
         }
 
         private void playData_clicked(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
+            ViewModel.IsPlay = true;
 
+            if (threadPlay?.Status == TaskStatus.Running)
+                return;
+
+            cancelToken = new CancellationTokenSource();
+            threadPlay = new Task(threadFunc_play, cancelToken.Token);
+            threadPlay.Start();
+        }
+
+        private void pauseData_clicked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.IsPlay = false;
+            cancelToken?.Cancel();
+        }
+
+        void threadFunc_play()
+        {
+            try
+            {
+                while (ViewModel.index < ViewModel.DataCount)
+                {
+                    cancelToken.Token.ThrowIfCancellationRequested();
+                    ViewModel.index += 1;
+                    Thread.Sleep(100);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+
+            }
+            finally
+            {
+                cancelToken.Cancel();
+            }
         }
     }
 }
