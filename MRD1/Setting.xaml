@@ -108,7 +108,19 @@
                                     TickFrequency="1" IsSnapToTickEnabled="True"
                                     VerticalAlignment="Center"/>
                         </DockPanel>
+                        <DockPanel Grid.Row="2" VerticalAlignment="Center">
+                            <TextBlock Text="픽셀당 실제 거리" DockPanel.Dock="Left"
+                                       Margin="0 0 30 0" VerticalAlignment="Center"/>
+                            <Button Content="측정" DockPanel.Dock="Right"
+                                    Style="{StaticResource MaterialDesignRaisedButton}"
+                                    MaterialDesign:ButtonProgressAssist.Value="-1"
+                                    MaterialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                    MaterialDesign:ButtonProgressAssist.IsIndeterminate="{Binding isRightCamera_getDistance}"
+                                    Width="100" Cursor="Hand" Click="RightCameraDistance_clicked"/>
 
+                            <TextBlock Text="{Binding RightCameraDistancePerPixel}" VerticalAlignment="Center"/>
+                            <TextBlock Text="mm" VerticalAlignment="Center"/>
+                        </DockPanel>
                         <Button Grid.Row="3" Content="초기화"/>
                     </Grid>
                 </Grid>

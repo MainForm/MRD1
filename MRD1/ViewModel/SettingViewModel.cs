@@ -14,6 +14,7 @@ namespace MRD1.ViewModel
     {
         public VideoCapture leftCamera;
         public VideoCapture rightCamera;
+
         public SettingViewModel()
         {
             MainWindow MainWindow = Application.Current.MainWindow as MainWindow;
@@ -61,15 +62,20 @@ namespace MRD1.ViewModel
             set => SetProperty(ref __isLeftCamera_getDistance, value);
         }
 
-        double __LeftCamera_DistancePerPixel;
-        public double LeftCameraDistancePerPixel
+        public double? LeftCameraDistancePerPixel
         {
-            get => __LeftCamera_DistancePerPixel;
-            set => SetProperty(ref __LeftCamera_DistancePerPixel, value);
+            get => MainWindow.MRD1_Setting.LeftCameraDistancePerPixel;
+            set
+            {
+                MainWindow.MRD1_Setting.LeftCameraDistancePerPixel = value;
+                NotifyPropertyChanged("LeftCameraDistancePerPixel");
+            }
         }
 
         #endregion
 
+
+        #region rightCameraSetting
         double __rightCameraBrightness;
         public double rightCameraBrightness
         {
@@ -84,5 +90,24 @@ namespace MRD1.ViewModel
                 NotifyPropertyChanged("rightCameraBrightness");
             }
         }
+
+        bool __isRightCamera_getDistance;
+        public bool isRightCamera_getDistance
+        {
+            get => __isRightCamera_getDistance;
+            set => SetProperty(ref __isRightCamera_getDistance, value);
+        }
+
+        public double? RightCameraDistancePerPixel
+        {
+            get => MainWindow.MRD1_Setting.RightCameraDistancePerPixel;
+            set
+            {
+                MainWindow.MRD1_Setting.RightCameraDistancePerPixel = value;
+                NotifyPropertyChanged("RightCameraDistancePerPixel");
+            }
+        }
+
+        #endregion
     }
 }

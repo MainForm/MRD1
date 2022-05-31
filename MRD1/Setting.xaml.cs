@@ -20,6 +20,9 @@ using OpenCvSharp;
 using OpenCvSharp.WpfExtensions;
 using Size = OpenCvSharp.Size;
 
+using System.IO;
+using Newtonsoft.Json;
+
 namespace MRD1
 {
     /// <summary>
@@ -73,6 +76,7 @@ namespace MRD1
                             {
                                 ViewModel.LeftCameraDistancePerPixel = distance;
                                 ViewModel.isLeftCamera_getDistance = false;
+                                MainWindow.MRD1_Setting.Save(MainWindow.settingFileName);
                             }
                         }
 
@@ -102,6 +106,16 @@ namespace MRD1
                     if (ViewModel.rightCamera.IsOpened())
                     {
                         readFrame(ViewModel.rightCamera, out Mat frame);
+
+                        if (ViewModel.isRightCamera_getDistance)
+                        {
+                            if (getDistancePerFixel(frame, out double distance))
+                            {
+                                ViewModel.RightCameraDistancePerPixel = distance;
+                                ViewModel.isRightCamera_getDistance = false;
+                                MainWindow.MRD1_Setting.Save(MainWindow.settingFileName);
+                            }
+                        }
 
                         Dispatcher.Invoke(() =>
                         {
@@ -185,14 +199,47 @@ namespace MRD1
         {
             ViewModel.isLeftCamera_getDistance = true;
         }
+
+        private void RightCameraDistance_clicked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.isRightCamera_getDistance = true;
+        }
     }
 
     public class MRD1Setting
     {
-        public double LeftCameraDistancePerPixel { get; set; }
-        public double RightCameraDistancePerPixel { get; set; }
-        public int thickness { get; set; }
+        public double? LeftCameraDistancePerPixel { get; set; } = null;
+        public double? RightCameraDistancePerPixel { get; set; } = null;
+        public int thickness { get; set; } = 3;
 
-        public double MRD1_Threshold { get; set; }
+        public double MRD1_Threshold { get; set; } = 1.5f;
+
+        public void Save(string path)
+        {
+            File.WriteAllText(path, JsonConvert.SerializeObject(this));
+        }
+
+        public static MRD1Setting Create(string path)
+        {
+            MRD1Setting MRD1_Setting;
+            if (File.Exists(path) == false)
+            {
+                MRD1_Setting = new MRD1Setting()
+                {
+                    LeftCameraDistancePerPixel = null,
+                    RightCameraDistancePerPixel = null,
+                    MRD1_Threshold = 1.5,
+                    thickness = 3,
+                };
+
+                File.WriteAllText(path, JsonConvert.SerializeObject(MRD1_Setting));
+            }
+            else
+            {
+                MRD1_Setting = JsonConvert.DeserializeObject<MRD1Setting>(File.ReadAllText(path));
+            }
+
+            return MRD1_Setting;
+        }
     }
 }

@@ -13,11 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.IO;
+
 using MySql.Data.MySqlClient;
 
 using OpenCvSharp;
 using OpenCvSharp.WpfExtensions;
 using Window = System.Windows.Window;
+
+using Newtonsoft.Json;
 
 using MRD1.DeapLearning;
 
@@ -32,6 +36,7 @@ namespace MRD1
         private RITnet __model;
         private MySqlConnection __connection;
 
+        public static string settingFileName = "setting.json";
 
         public UserControl CurrentContent
         {
@@ -40,6 +45,8 @@ namespace MRD1
                 ViewContentControl.Content = value;
             }
         }
+
+        public static MRD1Setting MRD1_Setting;
 
         public RITnet Model
         {
@@ -57,6 +64,8 @@ namespace MRD1
         public MainWindow()
         {
             InitializeComponent();
+
+            MRD1_Setting = MRD1Setting.Create(settingFileName);
 
             for(int i = 0; i < cameras.Length; i++)
                 cameras[i] = new VideoCapture();
