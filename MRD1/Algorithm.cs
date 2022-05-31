@@ -106,7 +106,8 @@ namespace MRD1
             return dest;
         }
 
-        public static double standardDeviation(this IEnumerable<int> sequence)
+
+        public static double standardDeviation(this IEnumerable<int> sequence) 
         {
             if (sequence.Count() != 0)
             {
@@ -115,6 +116,25 @@ namespace MRD1
                 return Math.Sqrt((sum) / sequence.Count());
             }
             return -1;
+        }
+
+        public static double standardDeviation(this IEnumerable<double> sequence)
+        {
+            if (sequence.Count() != 0)
+            {
+                double average = sequence.Average();
+                double sum = sequence.Sum(d => Math.Pow(d - average, 2));
+                return Math.Sqrt((sum) / sequence.Count());
+            }
+            return -1;
+        }
+    }
+
+    public class PointExtention
+    {
+        public static double getDistance(Point2f pt1, Point2f pt2)
+        {
+            return Math.Sqrt(Math.Pow(pt2.X - pt1.X, 2) + Math.Pow(pt2.Y - pt1.Y, 2));
         }
     }
 }

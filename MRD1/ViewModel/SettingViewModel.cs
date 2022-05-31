@@ -37,6 +37,7 @@ namespace MRD1.ViewModel
             set => SetProperty(ref __rightImage, value);
         }
 
+        #region leftCamera setting
         double __leftCameraBrightness;
         public double leftCameraBrightness
         {
@@ -51,6 +52,23 @@ namespace MRD1.ViewModel
                 NotifyPropertyChanged("leftCameraBrightness");
             }
         }
+
+        bool __isLeftCamera_getDistance;
+        
+        public bool isLeftCamera_getDistance
+        {
+            get => __isLeftCamera_getDistance;
+            set => SetProperty(ref __isLeftCamera_getDistance, value);
+        }
+
+        double __LeftCamera_DistancePerPixel;
+        public double LeftCameraDistancePerPixel
+        {
+            get => __LeftCamera_DistancePerPixel;
+            set => SetProperty(ref __LeftCamera_DistancePerPixel, value);
+        }
+
+        #endregion
 
         double __rightCameraBrightness;
         public double rightCameraBrightness

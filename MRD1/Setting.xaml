@@ -60,14 +60,20 @@
                         </DockPanel>
 
                         <DockPanel Grid.Row="2" VerticalAlignment="Center">
-                            <Label DockPanel.Dock="Left" Content="노출" />
-                            <TextBlock DockPanel.Dock="Right" Width="50"
-                                       HorizontalAlignment="Right"/>
-                            <Slider Minimum="0" Maximum="100" Value="50" TickFrequency="1" IsSnapToTickEnabled="True"
-                                    VerticalAlignment="Center"/>
-                        </DockPanel>
+                            <TextBlock Text="픽셀당 실제 거리" DockPanel.Dock="Left"
+                                       Margin="0 0 30 0" VerticalAlignment="Center"/>
+                            <Button Content="측정" DockPanel.Dock="Right"
+                                    Style="{StaticResource MaterialDesignRaisedButton}"
+                                    MaterialDesign:ButtonProgressAssist.Value="-1"
+                                    MaterialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                    MaterialDesign:ButtonProgressAssist.IsIndeterminate="{Binding isLeftCamera_getDistance}"
+                                    Width="100" Cursor="Hand" Click="LeftCameraDistance_clicked"/>
 
-                        <Button Grid.Row="3" Content="초기화"/>
+                            <TextBlock Text="{Binding LeftCameraDistancePerPixel}" VerticalAlignment="Center"/>
+                            <TextBlock Text="mm" VerticalAlignment="Center"/>
+                        </DockPanel>
+                        
+                        <Button Grid.Row="3" Content="초기화" Cursor="Hand"/>
                     </Grid>
                 </Grid>
             </GroupBox>
@@ -100,14 +106,6 @@
                                        HorizontalAlignment="Right" Text="{Binding rightCameraBrightness}"/>
                             <Slider Minimum="-15" Maximum="15" Value="{Binding rightCameraBrightness, Mode=TwoWay}"
                                     TickFrequency="1" IsSnapToTickEnabled="True"
-                                    VerticalAlignment="Center"/>
-                        </DockPanel>
-
-                        <DockPanel Grid.Row="2" VerticalAlignment="Center">
-                            <Label DockPanel.Dock="Left" Content="노출" />
-                            <TextBlock DockPanel.Dock="Right" Width="50"
-                                       HorizontalAlignment="Right"/>
-                            <Slider Minimum="0" Maximum="100" Value="50" 
                                     VerticalAlignment="Center"/>
                         </DockPanel>
 
