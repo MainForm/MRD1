@@ -68,7 +68,7 @@
         <MaterialDesign:DrawerHost>
             <DockPanel>
                 <DockPanel
-                    DockPanel.Dock="Left"
+                    DockPanel.Dock="Left" 
                     x:Name="MainMenu"
                     Background="LightGreen"
                     HorizontalAlignment="Left" Width="70">

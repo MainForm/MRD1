@@ -184,7 +184,7 @@ namespace MRD1.ViewModel
             get
             {
                 if(isLeftEyeOverlay == true)
-                    return WriteableBitmapConverter.ToWriteableBitmap(SelectLeftEyeData.drawResult());
+                    return WriteableBitmapConverter.ToWriteableBitmap(SelectLeftEyeData.drawResult(MainWindow.MRD1_Setting.thickness));
                 else
                     return WriteableBitmapConverter.ToWriteableBitmap(SelectLeftEyeData.image);
             }
@@ -207,7 +207,7 @@ namespace MRD1.ViewModel
             get
             {
                 if (isRightEyeOverlay == true)
-                    return WriteableBitmapConverter.ToWriteableBitmap(SelectRightEyeData.drawResult());
+                    return WriteableBitmapConverter.ToWriteableBitmap(SelectRightEyeData.drawResult(MainWindow.MRD1_Setting.thickness));
                 else
                     return WriteableBitmapConverter.ToWriteableBitmap(SelectRightEyeData.image);
             }

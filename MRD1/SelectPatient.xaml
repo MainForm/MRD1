@@ -23,6 +23,10 @@
         <Converter:GenderToIntConverter x:Key="GenderToIntConverter"/>
     </UserControl.Resources>
     <Grid>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Margin="0 100 0 0" FontSize="64"
+                   Text="MRD1 측정 프로그램"/>
+        
         <MaterialDesign:Flipper VerticalAlignment="Center" HorizontalAlignment="Center">
             <MaterialDesign:Flipper.FrontContent>
                 <Grid Width="800" Height="600">

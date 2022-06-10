@@ -25,33 +25,33 @@ namespace MRD1.ViewModel
             }
         }
 
-        private ObservableCollection<RecordData> __data;
+        private ObservableCollection<double> __data;
 
-        public ObservableCollection<RecordData> RecordData
+        public ObservableCollection<double> RecordData
         {
             get => __data;
             set => SetProperty(ref __data, value);
         }
 
-        private int? __mrd1 = null;
-        public int? MRD1
+        private double? __mrd1 = null;
+        public double? MRD1
         {
             get => __mrd1;
             set => SetProperty(ref __mrd1, value);
         }
-        public ChartValues<int> MRD1_chartData
+        public ChartValues<double> MRD1_chartData
         {
             get
             {
                 if (RecordData == null)
                     return null;
 
-                return new ChartValues<int>(from data in __data select data.mrd1);
+                return new ChartValues<double>(__data);
             }
         }
 
 
-        public void addRecordData(RecordData data)
+        public void addRecordData(double data)
         {
             __data.Add(data);
 

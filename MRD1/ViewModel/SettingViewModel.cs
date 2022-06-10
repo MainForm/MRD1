@@ -8,6 +8,7 @@ using System.Windows;
 
 using OpenCvSharp;
 
+
 namespace MRD1.ViewModel
 {
     public class SettingViewModel : BaseViewModel
@@ -24,7 +25,6 @@ namespace MRD1.ViewModel
         }
 
         ImageSource __leftImage;
-
         public ImageSource LeftImage
         {
             get => __leftImage;
@@ -39,6 +39,8 @@ namespace MRD1.ViewModel
         }
 
         #region leftCamera setting
+        
+
         double __leftCameraBrightness;
         public double leftCameraBrightness
         {

@@ -132,7 +132,7 @@ namespace MRD1
             }
         }
 
-        bool getDistancePerFixel(Mat frame,out double distance)
+        bool getDistancePerFixel(Mat frame,out double distance, double block_length = 5)
         {
             using Mat thres = frame
                 .CvtColor(ColorConversionCodes.BGR2GRAY)
@@ -171,7 +171,7 @@ namespace MRD1
                         double current_st = distances.standardDeviation();
                         if (current_st < st)
                         {
-                            distance = 0.5 / distances.Average();
+                            distance = block_length / distances.Average();
                             st = current_st;
                         }
                     }

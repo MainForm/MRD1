@@ -54,6 +54,12 @@ namespace MRD1
         {
             try
             {
+                double[] distancePerPixel = new double[2]
+                {
+                    MainWindow.MRD1_Setting.LeftCameraDistancePerPixel.Value,
+                    MainWindow.MRD1_Setting.RightCameraDistancePerPixel.Value,
+                };
+
                 while (true)
                 {
                     cancelToken.Token.ThrowIfCancellationRequested();
@@ -78,6 +84,7 @@ namespace MRD1
                             predicts[i] = MainWindow.Model.PredictEye(frames[i], new OpenCvSharp.Size(640, 400));
                         }
                     }
+
 
                     var postProcess = Task.Factory.StartNew(() =>
                     {
@@ -133,7 +140,7 @@ namespace MRD1
                             {
                                 for(int i = 0; i < records.Length; i++)
                                 {
-                                    ShowMRD1ViewModels[i].addRecordData(records[i]);
+                                    ShowMRD1ViewModels[i].addRecordData(records[i].mrd1 * distancePerPixel[i]);
                                 }
 
                                 ViewModel.MeasuringProgress++;
@@ -160,8 +167,9 @@ namespace MRD1
                         {
                             for (int i = 0; i < frames.Length; i++)
                             {
-                                ShowMRD1ViewModels[i].MRD1 = records[i]?.mrd1;
-                                Mat result = records[i]?.drawResult() ?? frames[i];
+                                ShowMRD1ViewModels[i].MRD1 = records[i]?.mrd1 * distancePerPixel[i];
+                                
+                                Mat result = records[i]?.drawResult(MainWindow.MRD1_Setting.thickness) ?? frames[i];
                                 Dispatcher.Invoke(() =>
                                 {
                                     ShowMRD1ViewModels[i].Image = WriteableBitmapConverter.ToWriteableBitmap(result);
@@ -206,7 +214,7 @@ namespace MRD1
 
                     for(int i = 0; i < ShowMRD1ViewModels.Length; i++)
                     {
-                        ShowMRD1ViewModels[i].RecordData = new ObservableCollection<RecordData>();
+                        ShowMRD1ViewModels[i].RecordData = new ObservableCollection<double>();
                     }
 
                     ViewModel.CurrentMeasurement.InsertDB(MainWindow.Connection);

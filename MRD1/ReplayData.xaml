@@ -173,7 +173,7 @@
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                                     <TextBox x:Name="LeftEyeMRD1" TextAlignment="Right" Width="100"
                                              Text="{Binding LeftEyeMRD1,UpdateSourceTrigger=PropertyChanged}"/>
-                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                    <TextBlock Text="pixel" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="1">
@@ -236,7 +236,7 @@
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                                     <TextBox x:Name="RightEyeMRD1" TextAlignment="Right" Width="100"
                                              Text="{Binding RightEyeMRD1,UpdateSourceTrigger=PropertyChanged}"/>
-                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                    <TextBlock Text="pixel" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="1">
