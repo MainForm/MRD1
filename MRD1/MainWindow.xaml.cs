@@ -38,6 +38,18 @@ namespace MRD1
 
         public static string settingFileName = "setting.json";
 
+        public CameraSetting[] CameraSettings = new CameraSetting[2]
+        {
+            new CameraSetting
+            {
+                index = 1,
+            },
+            new CameraSetting
+            {
+                index = 0,
+            },
+        };
+
         public UserControl CurrentContent
         {
             get => ViewContentControl.Content as UserControl;
@@ -70,15 +82,13 @@ namespace MRD1
             for(int i = 0; i < cameras.Length; i++)
                 cameras[i] = new VideoCapture();
 
-            var LeftCamera = getCamera(CameraPosition.Left);
-            LeftCamera.Open(1);
-            LeftCamera.Set(VideoCaptureProperties.FrameHeight, 720);
-            LeftCamera.Set(VideoCaptureProperties.FrameWidth, 1280);
-
-            var RightCamera = getCamera(CameraPosition.Right);
-            RightCamera.Open(0);
-            RightCamera.Set(VideoCaptureProperties.FrameHeight, 720);
-            RightCamera.Set(VideoCaptureProperties.FrameWidth, 1280);
+            for(int i = 0;i < 2; i++)
+            {
+                var RightCamera = getCamera((CameraPosition)i);
+                RightCamera.Open(CameraSettings[i].index);
+                RightCamera.Set(VideoCaptureProperties.FrameHeight, CameraSettings[i].frame_height);
+                RightCamera.Set(VideoCaptureProperties.FrameWidth, CameraSettings[i].frame_width);
+            }
 
             __model = new RITnet("./RITnet.onnx");
 

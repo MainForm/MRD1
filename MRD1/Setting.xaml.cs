@@ -23,6 +23,8 @@ using Size = OpenCvSharp.Size;
 using System.IO;
 using Newtonsoft.Json;
 
+using DirectShowLib;
+
 namespace MRD1
 {
     /// <summary>
@@ -44,6 +46,9 @@ namespace MRD1
             InitializeComponent();
 
             ViewModel = new SettingViewModel();
+            var Names = from cameras in DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice) select cameras.Name;
+            ViewModel.CameraNames = new System.Collections.ObjectModel.ObservableCollection<string>(Names);
+
             DataContext = ViewModel;
 
             taskLeftCameraPlay = new Task(threadFunctionLeftCameraPlay, cancelToken.Token);
@@ -82,7 +87,17 @@ namespace MRD1
 
                         Dispatcher.Invoke(() =>
                         {
-                            ViewModel.LeftImage = WriteableBitmapConverter.ToWriteableBitmap(frame);
+                            if (frame.Empty())
+                                ViewModel.LeftImage = null;
+                            else
+                                ViewModel.LeftImage = WriteableBitmapConverter.ToWriteableBitmap(frame);
+                        });
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            ViewModel.LeftImage = null;
                         });
                     }
 
@@ -116,10 +131,19 @@ namespace MRD1
                                 MainWindow.MRD1_Setting.Save(MainWindow.settingFileName);
                             }
                         }
-
                         Dispatcher.Invoke(() =>
                         {
-                            ViewModel.RightImage = WriteableBitmapConverter.ToWriteableBitmap(frame);
+                            if (frame.Empty())
+                                ViewModel.RightImage = null;
+                            else
+                                ViewModel.RightImage = WriteableBitmapConverter.ToWriteableBitmap(frame);
+                        });
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            ViewModel.RightImage = null;
                         });
                     }
 
@@ -203,6 +227,11 @@ namespace MRD1
         private void RightCameraDistance_clicked(object sender, RoutedEventArgs e)
         {
             ViewModel.isRightCamera_getDistance = true;
+        }
+
+        private void LeftCamera_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
         }
     }
 

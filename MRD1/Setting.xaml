@@ -44,11 +44,9 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <ComboBox Grid.Row="0" Margin="0"
-                            MaterialDesign:HintAssist.Hint="카메라 변경">
-                            <ComboBoxItem Content="Camera1" />
-                            <ComboBoxItem Content="Camera2" />
-                        </ComboBox>
+                        <ComboBox Grid.Row="0" Margin="0" ItemsSource="{Binding CameraNames}" 
+                                  SelectedIndex="{Binding LeftCameraIndex,Mode=TwoWay}"
+                            MaterialDesign:HintAssist.Hint="카메라 변경" SelectionChanged="LeftCamera_SelectionChanged"/>
 
                         <DockPanel Grid.Row="1" VerticalAlignment="Center">
                             <Label DockPanel.Dock="Left" Content="밝기" />
@@ -94,11 +92,9 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <ComboBox Grid.Row="0" Margin="0"
-                            MaterialDesign:HintAssist.Hint="카메라 변경">
-                            <ComboBoxItem Content="Camera1" />
-                            <ComboBoxItem Content="Camera2" />
-                        </ComboBox>
+                        <ComboBox Grid.Row="0" Margin="0" ItemsSource="{Binding CameraNames}" 
+                                  SelectedIndex="{Binding RightCameraIndex,Mode=TwoWay}"
+                            MaterialDesign:HintAssist.Hint="카메라 변경"/>
 
                         <DockPanel Grid.Row="1" VerticalAlignment="Center">
                             <Label DockPanel.Dock="Left" Content="밝기" />

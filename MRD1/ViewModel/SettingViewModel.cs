@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows;
 
+using System.Collections.ObjectModel;
+
 using OpenCvSharp;
 
 
@@ -15,10 +17,11 @@ namespace MRD1.ViewModel
     {
         public VideoCapture leftCamera;
         public VideoCapture rightCamera;
+        MainWindow MainWindow;
 
         public SettingViewModel()
         {
-            MainWindow MainWindow = Application.Current.MainWindow as MainWindow;
+            MainWindow = Application.Current.MainWindow as MainWindow;
 
             leftCamera = MainWindow.getCamera(CameraPosition.Left);
             rightCamera = MainWindow.getCamera(CameraPosition.Right);
@@ -38,8 +41,39 @@ namespace MRD1.ViewModel
             set => SetProperty(ref __rightImage, value);
         }
 
+        ObservableCollection<string> __cameraNames = new ObservableCollection<string>();
+
+        public ObservableCollection<string> CameraNames
+        {
+            get => __cameraNames;
+            set => SetProperty(ref __cameraNames, value);
+        }
+
         #region leftCamera setting
-        
+
+        public int LeftCameraIndex
+        {
+            get => MainWindow.CameraSettings[(int)CameraPosition.Left].index;
+            set
+            {
+                if (value == MainWindow.CameraSettings[(int)CameraPosition.Right].index)
+                {
+                    RightCameraIndex = -1;
+                }
+                var camera = MainWindow.getCamera(CameraPosition.Left);
+                if (value != -1)
+                {
+                    camera.Open(value);
+                    camera.Set(VideoCaptureProperties.FrameHeight, 
+                        MainWindow.CameraSettings[(int)CameraPosition.Left].frame_height);
+                    camera.Set(VideoCaptureProperties.FrameWidth, 
+                        MainWindow.CameraSettings[(int)CameraPosition.Left].frame_width);
+                }
+                else
+                    camera.Release();
+                MainWindow.CameraSettings[(int)CameraPosition.Left].index = value;
+            }
+        }
 
         double __leftCameraBrightness;
         public double leftCameraBrightness
@@ -78,6 +112,30 @@ namespace MRD1.ViewModel
 
 
         #region rightCameraSetting
+
+        public int RightCameraIndex
+        {
+            get => MainWindow.CameraSettings[(int)CameraPosition.Right].index;
+            set {
+                if (value == MainWindow.CameraSettings[(int)CameraPosition.Left].index)
+                {
+                    LeftCameraIndex = -1;
+                }
+                var camera = MainWindow.getCamera(CameraPosition.Right);
+                if (value != -1)
+                {
+                    camera.Open(value);
+                    camera.Set(VideoCaptureProperties.FrameHeight,
+                        MainWindow.CameraSettings[(int)CameraPosition.Right].frame_height);
+                    camera.Set(VideoCaptureProperties.FrameWidth,
+                        MainWindow.CameraSettings[(int)CameraPosition.Right].frame_width);
+                }
+                else
+                    camera.Release();
+                MainWindow.CameraSettings[(int)CameraPosition.Right].index = value;
+            }
+        }
+
         double __rightCameraBrightness;
         public double rightCameraBrightness
         {
