@@ -156,12 +156,14 @@ namespace MRD1.ViewModel
 
                 //Left Eye value update
                 NotifyPropertyChanged("LeftEyeMRD1");
+                NotifyPropertyChanged("LeftEyeMRD1byMM");
                 NotifyPropertyChanged("LeftEyePupilCenterX");
                 NotifyPropertyChanged("LeftEyePupilCenterY");
                 NotifyPropertyChanged("LeftEyePupilRadius");
 
                 //Right Eye value update
                 NotifyPropertyChanged("RightEyeMRD1");
+                NotifyPropertyChanged("RightEyeMRD1byMM");
                 NotifyPropertyChanged("RightEyePupilCenterX");
                 NotifyPropertyChanged("RightEyePupilCenterY");
                 NotifyPropertyChanged("RightEyePupilRadius");
@@ -265,9 +267,18 @@ namespace MRD1.ViewModel
             {
                 SelectLeftEyeData.mrd1 = value;
                 NotifyPropertyChanged("LeftEyeMRD1");
+                NotifyPropertyChanged("LeftEyeMRD1byMM");
                 NotifyPropertyChanged("LeftEyeImage");
                 NotifyPropertyChanged("LeftEyeMRD1Average");
                 NotifyPropertyChanged("LeftEyeMRD1StandardDeviation");
+            }
+        }
+
+        public double LeftEyeMRD1byMM
+        {
+            get
+            {
+                return Math.Round((double)LeftEyeMRD1 * MainWindow.MRD1_Setting.LeftCameraDistancePerPixel.Value, 2);
             }
         }
 
@@ -314,7 +325,7 @@ namespace MRD1.ViewModel
             {
                 var LeftEyeMRD1 = from mrd1 in __RecordData[0] select mrd1.mrd1;
 
-                return LeftEyeMRD1.Average();
+                return LeftEyeMRD1.Average() * (double)MainWindow.MRD1_Setting.LeftCameraDistancePerPixel;
             }
         }
 
@@ -324,7 +335,7 @@ namespace MRD1.ViewModel
             {
                 var LeftEyeMRD1 = from mrd1 in __RecordData[0] select mrd1.mrd1;
 
-                return LeftEyeMRD1.standardDeviation();
+                return LeftEyeMRD1.standardDeviation() * (double)MainWindow.MRD1_Setting.LeftCameraDistancePerPixel;
             }
         }
 
@@ -350,7 +361,16 @@ namespace MRD1.ViewModel
             {
                 SelectRightEyeData.mrd1 = value;
                 NotifyPropertyChanged("RightEyeMRD1");
+                NotifyPropertyChanged("RightEyeMRD1byMM");
                 NotifyPropertyChanged("RightEyeImage");
+            }
+        }
+
+        public double RightEyeMRD1byMM
+        {
+            get
+            {
+                return Math.Round((double)RightEyeMRD1 * MainWindow.MRD1_Setting.RightCameraDistancePerPixel.Value, 2);
             }
         }
 
@@ -397,7 +417,7 @@ namespace MRD1.ViewModel
             {
                 var RightEyeMRD1 = from mrd1 in __RecordData[1] select mrd1.mrd1;
 
-                return RightEyeMRD1.Average();
+                return RightEyeMRD1.Average()* (double)MainWindow.MRD1_Setting.RightCameraDistancePerPixel;
             }
         }
 
@@ -407,7 +427,7 @@ namespace MRD1.ViewModel
             {
                 var RightEyeMRD1 = from mrd1 in __RecordData[1] select mrd1.mrd1;
 
-                return RightEyeMRD1.standardDeviation();
+                return RightEyeMRD1.standardDeviation() * (double)MainWindow.MRD1_Setting.RightCameraDistancePerPixel;
             }
         }
 

@@ -91,11 +91,17 @@
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="MRD1 편차"
                                    VerticalAlignment="Center" FontSize="18"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
-                                   FontSize="18" Text="{Binding LeftEyeMRD1Average}"/>
-
-                        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
-                                   FontSize="18" Text="{Binding LeftEyeMRD1StandardDeviation}"/>
+                        <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                    Orientation="Horizontal">
+                            <TextBlock FontSize="18" Text="{Binding LeftEyeMRD1Average}" VerticalAlignment="Center"/>
+                            <TextBlock Text="mm" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                    Orientation="Horizontal">
+                            <TextBlock FontSize="18" Text="{Binding LeftEyeMRD1StandardDeviation}" VerticalAlignment="Center"/>
+                            <TextBlock Text="mm" VerticalAlignment="Center"/>
+                        </StackPanel>
                     </Grid>
                 </GroupBox>
                 <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}"
@@ -114,12 +120,19 @@
                                    VerticalAlignment="Center" FontSize="18"/>
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="MRD1 편차"
                                    VerticalAlignment="Center" FontSize="18"/>
+                        
+                        <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                    Orientation="Horizontal">
+                            <TextBlock FontSize="18" Text="{Binding RightEyeMRD1Average}" VerticalAlignment="Center"/>
+                            <TextBlock Text="mm" VerticalAlignment="Center"/>
+                        </StackPanel>
 
-                        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
-                                   FontSize="18" Text="{Binding RightEyeMRD1Average}"/>
+                        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                    Orientation="Horizontal">
+                            <TextBlock FontSize="18" Text="{Binding RightEyeMRD1StandardDeviation}" VerticalAlignment="Center"/>
+                            <TextBlock Text="mm" VerticalAlignment="Center"/>
+                        </StackPanel>
 
-                        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
-                                   FontSize="18" Text="{Binding RightEyeMRD1StandardDeviation}"/>
                     </Grid>
                 </GroupBox>
             </Grid>
@@ -170,11 +183,18 @@
                                        VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
                             <Grid Grid.Row="0" Grid.Column="1">
+
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                                     <TextBox x:Name="LeftEyeMRD1" TextAlignment="Right" Width="100"
-                                             Text="{Binding LeftEyeMRD1,UpdateSourceTrigger=PropertyChanged}"/>
+                                             Text="{Binding LeftEyeMRD1,UpdateSourceTrigger=PropertyChanged}" Cursor="Arrow"/>
                                     <TextBlock Text="pixel" VerticalAlignment="Center"/>
+
+                                    
+                                    <TextBlock TextAlignment="Right" Width="100" VerticalAlignment="Center"
+                                             Text="{Binding LeftEyeMRD1byMM}"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
                                 </StackPanel>
+
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="1">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -237,6 +257,9 @@
                                     <TextBox x:Name="RightEyeMRD1" TextAlignment="Right" Width="100"
                                              Text="{Binding RightEyeMRD1,UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBlock Text="pixel" VerticalAlignment="Center"/>
+                                    <TextBlock TextAlignment="Right" Width="100" VerticalAlignment="Center"
+                                             Text="{Binding RightEyeMRD1byMM}"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="1">

@@ -38,7 +38,6 @@ namespace MRD1
             DataContext = ViewModel;
 
             ViewModel.updatePatient();
-
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -69,6 +68,24 @@ namespace MRD1
 
         private void AddPatientButton_Clicked(object sender, RoutedEventArgs e)
         {
+            if(ViewModel.AddName?.Length <= 0)
+            {
+                MainWindow.MainSnackbar.MessageQueue.Enqueue("이름을 입력하세요.");
+                return;
+            }
+
+            if(ViewModel.AddCallnumber?.Length <= 5)
+            {
+                MainWindow.MainSnackbar.MessageQueue.Enqueue("전화번호를 입력하세요.");
+                return;
+            }
+
+            if(ViewModel.AddBirth.HasValue == false)
+            {
+                MainWindow.MainSnackbar.MessageQueue.Enqueue("생일을 선택하세요.");
+                return;
+            }
+
             ViewModel.InsertPatient(new Patient
             {
                 Name = ViewModel.AddName,

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using System.IO;
+using System.IO.Ports;
 
 using MySql.Data.MySqlClient;
 
@@ -37,6 +38,8 @@ namespace MRD1
         private MySqlConnection __connection;
 
         public static string settingFileName = "setting.json";
+
+        public SerialPort LedController = new SerialPort("COM3");
 
         public CameraSetting[] CameraSettings = new CameraSetting[2]
         {
@@ -77,8 +80,14 @@ namespace MRD1
         {
             InitializeComponent();
 
+            //아두이노 연결
+            LedController.Open();
+            LedController.WriteLine($"OFF");
+
+            //프로그램 Setting 가져오기
             MRD1_Setting = MRD1Setting.Create(settingFileName);
 
+            //카메라 접근
             for(int i = 0; i < cameras.Length; i++)
                 cameras[i] = new VideoCapture();
 
@@ -108,6 +117,8 @@ namespace MRD1
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
+            LedController.WriteLine($"OFF");
+
             __connection.Close();
             __connection.Dispose();
 

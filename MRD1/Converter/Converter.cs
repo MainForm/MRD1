@@ -9,6 +9,8 @@ using System.Windows.Data;
 
 using MRD1.ViewModel;
 
+using System.Windows;
+
 namespace MRD1.Converter
 {
     public class BleanToVisibilityConverter : IValueConverter

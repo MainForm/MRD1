@@ -173,9 +173,18 @@
                                                              Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}"/>
 
                                     <TextBox Grid.Row="0" Grid.Column="1" Height="40"
-                                             Text="{Binding AddName}"
                                              MaterialDesign:HintAssist.Hint="이름"
-                                             MaterialDesign:HintAssist.HelperText="이름을 입력하세요"/>
+                                             MaterialDesign:HintAssist.HelperText="이름을 입력하세요" Cursor="Arrow">
+                                        <TextBox.Text>
+                                            <Binding 
+                                                Path="AddName"
+                                                UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <ViewModel:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
 
                                     <MaterialDesign:PackIcon Grid.Row="1" Grid.Column="0"
                                                              VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -183,11 +192,20 @@
                                                              Foreground="{Binding ElementName=PhoneTextBox, Path=BorderBrush}"/>
 
                                     <TextBox Grid.Row="1" Grid.Column="1" Height="40"
-                                             Text="{Binding AddCallnumber}"
                                              MaterialDesign:HintAssist.Hint="전화번호"
                                              MaterialDesign:HintAssist.HelperText="전화번호를 입력하세요"
                                              MaxLength="11"
-                                             MaterialDesign:TransitionAssist.DisableTransitions="True" Cursor="Arrow"/>
+                                             MaterialDesign:TransitionAssist.DisableTransitions="True" Cursor="Arrow">
+                                        <TextBox.Text>
+                                            <Binding
+                                                Path="AddCallnumber"
+                                                UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <ViewModel:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
 
                                     <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal">
                                         <Label Content="성별" Foreground="Gray"/>
@@ -199,9 +217,18 @@
                                     </StackPanel>
 
                                     <DatePicker Grid.Row="3" Grid.Column="1" Height="50"
-                                                SelectedDate="{Binding AddBirth}"
                                                 MaterialDesign:HintAssist.Hint="생일"
-                                                MaterialDesign:TextFieldAssist.HasClearButton="True"/>
+                                                MaterialDesign:TextFieldAssist.HasClearButton="True">
+                                        <DatePicker.SelectedDate>
+                                            <Binding
+                                                Path="AddBirth"
+                                                UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <ViewModel:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </DatePicker.SelectedDate>
+                                    </DatePicker>
                                 </Grid>
                             </DockPanel>
                         </Grid>

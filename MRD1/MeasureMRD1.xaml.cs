@@ -153,6 +153,7 @@ namespace MRD1
 
                                 if (ViewModel.MeasuringProgress == 50)
                                 {
+                                    MainWindow.LedController.WriteLine($"OFF");
                                     Dispatcher.Invoke(() =>
                                     {
                                         MainWindow.MainSnackbar.MessageQueue.Enqueue($"검사 완료");
@@ -198,13 +199,14 @@ namespace MRD1
                     /*
                      * 아두이노 해당 LED 반짝반짝
                      */
+                    MainWindow.LedController.WriteLine($"BLINK {2 - (int)ViewModel.LedPosition}");
                     ViewModel.MeasureStatus = MeasureStatus.Ready;
                     break;
                 case MeasureStatus.Ready:
                     /*
                      * 아두이노 해당 LED 점등
                      */
-
+                    MainWindow.LedController.WriteLine($"ON {2 - (int)ViewModel.LedPosition}");
                     ViewModel.CurrentMeasurement = new Measurement
                     {
                         Led_Position = ViewModel.LedPosition,
